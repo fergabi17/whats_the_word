@@ -1,0 +1,11 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<h3>Your results in the database</h3>
+    {% for item in input%}
+    <p>{{item}} : {{input[item]}} <a href="{{ url_for('delete_item', input_id=input._id, item=item) }}">delete</a></p>
+    {% endfor %}
+    <hr>
+    <a href="{{ url_for('delete_results', input_id=input._id) }}"><button>Delete all my results</button></a>
+
+{%endblock%}
