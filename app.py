@@ -14,12 +14,6 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb+srv://root:F3rnand4@my
 
 mongo = PyMongo(app)
 
-
-if __name__ == '__main__':
-    app.run(host=os.environ.get('IP'),
-            port=int(os.environ.get('PORT')),
-            debug=True)
-
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -35,11 +29,9 @@ def getfile():
 
         file = request.files['myfile']
         file_content = file.read().decode()
-        #file_content = str(file_content).encode('iso-8859-1').decode('utf-8')
         results = libs.get_data_from_whats(file_content.lower())
-        #inputs = mongo.db.inputs
-        #this_insert = inputs.insert_one(results)
-        #results = { "File_content": file_content.lower()}
+        inputs = mongo.db.inputs
+        this_insert = inputs.insert_one(results)
 
         return render_template('display_result.html', results=results)
 
@@ -78,6 +70,12 @@ def consultdb():
             return render_template('display_result.html', results=the_input)
         except:
             print("Error in finding this id in the database")
+            
+            
+if __name__ == '__main__':
+    app.run(host=os.environ.get('IP'),
+            port=int(os.environ.get('PORT')),
+            debug=True)
 
         
 
