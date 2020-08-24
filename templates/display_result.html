@@ -1,9 +1,70 @@
 {%extends 'base.html'%}
 
 {%block content%}
+<div class="col-12">
 <h3>Your results</h3>
+
+<p class="text-left">Your session id is: {{results._id}}</p>
+
+<div class="row result dark">
+    <div class="col-12">
+        <p>This is a story about a chat between:<br>
+
+            {% for person in results.participants %}
+                {% if person == results.participants[last]%}
+                    <span>and {{person.title()}}.</span>
+                {% else %}
+                    <span>{{person.title()}}{{count}}</span>,
+
+                {% endif%}
+            {% endfor%}
+        </p>
+        <p>
+            They have sent <span>{{results.messages}} messages</span> in <span>{{results.period_length}} month(s)</span><br>
+            from <span>{{results.period[0]}} to {{results.period[1]}}</span>
+        </p>
+    </div>
+</div>
+
+<div class="row result light">
+    <div class="col-12">
+        <p>During this time, <br>
+            {% for person in results.links %}
+                <span>{{person.title()}}</span> sent <span>{{results.links[person]}} </span><br>
+            {% endfor%}
+            <span>LINKS</span>
+        </p>
+
+    </div>
+</div>
+
+<div class="row result white">
+    <div class="col-12">
+        <p>And they also shared <span>MEDIA:</span> <br>
+            {% for person in results.media %}
+                <span>{{person.title()}}</span> sent <span>{{results.media[person]}} </span><br>
+            {% endfor%}
+        </p>
+
+    </div>
+</div>
+
+<div class="row result bright">
+    <div class="col-12">
+        <p>The person who sent <span>more messages</span> was<br>
+            {% for person in results.participants %}
+            <span>{{person.title()}}</span> sent <span>{{results.participants[person]}} </span><br>
+            {% endfor%}
+        </p>
+
+    </div>
+</div>
+
+
+
     {%for result in results%}
     <p>{{result}}: {{results[result]}}</p>
     {%endfor%}
     <a href="{{ url_for('edit_results', results_id=results._id) }}"><button>Restrict the use of this data</button></a>
+</div>
 {%endblock%}

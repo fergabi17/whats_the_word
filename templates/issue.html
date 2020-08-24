@@ -1,0 +1,21 @@
+{%extends 'base.html'%}
+{%block content%}
+<div class="col-12">
+    <p class="issue">¯\_(ツ)_/¯</p>
+    <p class="issue">Ooops... There was an issue with your {{issue}}.</p>
+    <p class="spacious-p">
+        {% if issue == "input" %}
+        • Make sure you upload a .txt file exported from WhatsApp. You can check how to do this <a
+            href="{{ url_for('how_to_use') }}">here</a>.
+        {% else %}
+            This session id "{{session_id}}" wasn't found in our database.
+
+        {% endif %}
+    </p>
+    <p class="spacious-p">
+        <a href="{{ url_for('home') }}"><button class="btn-large">Home</button></a>
+    </p>
+
+</div>
+
+{%endblock%}

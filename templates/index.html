@@ -1,12 +1,34 @@
 {%extends 'base.html'%}
 {%block content%}
-<form action="getfile" method="POST" enctype="multipart/form-data">
-    Project file path: <input type="file" name="myfile"><br>
+<div class="col-12">
+    <p class="main-text">Find out the words that appear the most <br>on your WhatsApp chat!<br>
+        <span class="tiny-text">Don’t worry, we don’t keep any data you don’t allow us to keep =)</span></p>
 
-    <input type="submit" value="Submit">
-</form>
-<p>Find out the words that appear the most on your WhatsApp chat.
-Don’t worry, we don’t keep any data you don’t want us to keep :)</p>
+    <p class="spacious-p">
+        <i class="material-icons">file_upload</i>
+        <span class="load-p">Load a WhatsApp chat: </span>
+    </p>
+    <form action="getfile" method="POST" enctype="multipart/form-data">
 
-<p>You can consult data from a previous session with your session id <a href="{{ url_for('consult') }}">here</a>.</p>
+        <div class="file-input-wrapper">
+            <p>
+                <input type="file" name="myfile" class="file-input">
+            </p>
+        </div>
+
+
+
+        <p>
+            <a><input class="btn-large" type="submit" value="Check this chat!"></a>
+        </p>
+
+    </form>
+</div>
+<div class="col-12">
+
+    <p class="spacious-p">You can consult data from a previous session with your session id <a
+            href="{{ url_for('consult') }}"><b>here</b></a>.
+    </p>
+
+</div>
 {%endblock%}

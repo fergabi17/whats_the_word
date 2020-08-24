@@ -1,0 +1,222 @@
+body {
+    background-color: #ECE5DD;    
+}
+
+p {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: large;
+    color: grey;
+}
+
+p a {
+    color: #25D366;
+    text-decoration: none;
+}
+
+p a:hover{
+    color: #34B7f1;
+    text-decoration: none;
+}
+
+button:focus { 
+    outline-style: none; 
+}
+
+.container-color {
+    background-color: #ffffff
+}
+
+/* ------------------------------------------ NAV */
+
+.nav-wrapper {
+    background-color: #075E54;
+}
+
+.nav {
+    text-decoration: none;
+}
+
+.nav ul {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.nav li {
+    display: inline-block;
+    padding: 20px;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.nav a {
+    font-family: 'Do Hyeon', sans-serif;
+    color: #ffffff;
+    size: 18pt;
+    text-decoration: none;
+}
+
+.nav a:hover  {
+    background-color: #25D366;
+    text-decoration: wavy;
+    text-shadow:1px 1px 0px rgb(2, 4, 2);
+}
+
+/* ------------------------------------------ Headers */
+
+h1 {
+    font-family: 'Do Hyeon', sans-serif;
+    color: #25D366;
+    line-height: 70%;
+    padding: 20px;
+    margin: 60px;
+}
+
+h3 {
+    font-family: 'Do Hyeon', sans-serif;
+    color: #075E54;
+    padding: 20px;
+}
+
+/* ------------------------------------------ ICONS */
+
+.material-icons {
+    font-size: 30px;
+    color: #075E54; 
+}
+
+/* ------------------------------------------ INDEX */
+
+.file-input-wrapper {
+    background-color: #f5f2ee;
+}
+
+.file-input {
+    font-size: small;
+    padding: 15px;
+}
+
+.main-text {
+    font-size: 22pt;
+    font-weight: bolder;
+    line-height: 130%;
+}
+
+.spacious-p {
+    margin-top: 80px;
+    margin-bottom: 0;
+}
+
+.tiny-text {
+    font-size: 11px;
+    display: block;
+}
+
+.load-p {
+    position: relative;
+    top: -10px;
+}
+
+.btn-large {
+    width: 200px;
+    height: 100px;
+    background-color: #075E54; 
+    color: #ffffff;
+    font-family:'Do Hyeon', sans-serif;
+    letter-spacing: 2px;
+    border: 0px;
+    border-radius: 20px;
+}
+
+.btn-large:hover{
+    background-color: #25D366;
+    color: #ffffff;
+    border: solid 3px black;
+}
+
+/* ------------------------------------------ FOOTER */
+
+.footer {
+    background-color: #075E54;
+    margin-top: 60px;
+    margin-bottom: 0;
+    padding: 10px 20px;
+    color: #ffffff;
+    font-size: 10pt;
+}
+
+
+
+
+/* ------------------------------------------ ISSUE */
+
+.issue {
+    margin: 60px;
+    font-size: 32px;
+    font-family: 'Lucida Sans', sans-serif;
+}
+
+/* ------------------------------------------ RESULTS */
+
+.result {
+    padding: 20px;
+}
+
+.result p {
+    font-size: 18 pt;
+    font-family:'Nanum Gothic', sans-serif;
+}
+
+.result span{
+    font-family:'Do Hyeon', sans-serif;
+    font-size: 20pt;
+}
+
+.dark {
+    background-color: #075E54;
+}
+
+.dark p {
+    color: #ffffff;  
+}
+
+.dark span {    
+    text-shadow:2px 2px 0px rgb(2, 4, 2);
+}
+
+.light {
+    background-color: #DCF8C6;
+}
+
+.light p {
+    color: #075E54;
+}
+
+.light span {
+    text-shadow:2px 2px 0px rgb(255, 255, 255);
+}
+
+.white {
+    background-color: #ffffff;
+}
+
+.white p {
+    color: #075E54;
+}
+
+.white span {
+    text-shadow:1px 1px 1px rgb(2, 4, 2);;
+}
+
+.bright {
+    background-color: #34B7f1;
+}
+
+.bright p {
+    color: #ffffff;
+}
+
+.bright span {
+    text-shadow:1px 1px 1px rgb(2, 4, 2);;
+}
+

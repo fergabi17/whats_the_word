@@ -22,18 +22,28 @@ def home():
 def consult():
     return render_template('consult.html')
 
+@app.route('/how_to_use')
+def how_to_use():
+    return render_template('how_to_use.html')
+
+@app.route('/global_words')
+def global_words():
+    return render_template('global_words.html')
+
 
 @app.route('/getfile', methods=['GET','POST'])
 def getfile():
     if request.method == 'POST':
+        #try:
+            file = request.files['myfile']
+            file_content = file.read().decode()
+            results = libs.get_data_from_whats(file_content.lower())
+            inputs = mongo.db.inputs
+            this_insert = inputs.insert_one(results)
 
-        file = request.files['myfile']
-        file_content = file.read().decode()
-        results = libs.get_data_from_whats(file_content.lower())
-        inputs = mongo.db.inputs
-        this_insert = inputs.insert_one(results)
-
-        return render_template('display_result.html', results=results)
+            return render_template('display_result.html', results=results)
+        #except:
+            return render_template('issue.html', issue="input")
 
     return redirect(url_for('home'))
 
@@ -63,13 +73,12 @@ def delete_results(input_id):
 @app.route('/consultdb', methods=['GET','POST'])
 def consultdb():
     if request.method == 'POST':
-
         session_id = request.form["session_id"]
         try:
             the_input= mongo.db.inputs.find_one({'_id':ObjectId(session_id)})
             return render_template('display_result.html', results=the_input)
         except:
-            print("Error in finding this id in the database")
+            return render_template('issue.html', issue="session_id", session_id = session_id)
             
             
 if __name__ == '__main__':

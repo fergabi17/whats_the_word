@@ -1,13 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popular words</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Materialize Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+
+    <title>Whats the word</title>
 </head>
+
 <body>
-<h1>Popular words in your chat!</h1>
-{% block content %}
-{% endblock %}
+    <div class="container container-color">
+        <div class="row">
+            <div class="col-12 nav-wrapper">
+                <nav>
+                    <div>
+                        <ul class="nav">
+                            <a href="{{ url_for('home') }}">
+                                <li>Home</li>
+                            </a>
+                            <a href="{{ url_for('how_to_use') }}">
+                                <li>How to use</li>
+                            </a>
+                            <a href="{{ url_for('global_words') }}">
+                                <li>Global Words</li>
+                            </a>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12">
+                <h1>Whats <br>the word?</h1>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <footer>
+            <div class="row">
+                <div class="col-12 p-0">
+                    <p class="footer">
+                        Created by Fernanda Cetnarovski | <a href="https://github.com/fergabi17"
+                            target="_blank">GitHub</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+
+    </div>
 </body>
+
 </html>
