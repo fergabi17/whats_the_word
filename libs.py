@@ -1,4 +1,5 @@
 import re
+import json
 from collections import Counter
 
 import benford_law
@@ -15,7 +16,6 @@ def get_data_from_whats(file_content):
     prefixes = get_prefixes(file_content)
     period = get_period(prefixes)
     messages = get_messages(file_content)
-    #messages_body = get_messages_body(prefixes, file_content)
     messages_body = get_messages_body(messages)
     
     longest_word = get_longest_word(messages_body)
@@ -46,18 +46,14 @@ def get_data_from_whats(file_content):
         "longest_word": longest_word,
         "longest_word_dates": get_word_info(longest_word, messages),
         
-        "words_combinations": word_combinations,
+        "word_combinations": word_combinations,
         "word_seq_1_result": get_monthly_frequency(word_seq_1_dates),
         "word_seq_2_result": get_monthly_frequency(word_seq_2_dates),
         "word_seq_3_result": get_monthly_frequency(word_seq_3_dates),
         
         "benford": benford_law.apply_benford(messages, media)
-    }
-    
-  
+    }      
 
-    #words_result = {"word_1_dates": word_1_dates, "word_2_dates": word_2_dates, "word_3_dates": word_3_dates, 
-    #                "word_seq_1_dates": word_seq_1_dates, "word_seq_2_dates": word_seq_2_dates, "word_seq_3_dates": word_seq_3_dates}
     return words_result
 
 
@@ -193,8 +189,8 @@ def get_participants(prefixes):
     for prefix in prefixes:
         name = get_participant_name(prefix)
         participants_names.append(name)
-
-    return Counter(participants_names)
+    return Counter(participants_names).most_common()
+    #return Counter(participants_names)
 
 
 def get_participant_name(prefix):

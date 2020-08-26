@@ -1,12 +1,6 @@
 {%extends 'base.html'%}
 {%block content%}
-<form action="getfile" method="POST" enctype="multipart/form-data">
-    Project file path: <input type="file" name="myfile"><br>
-
-    <input type="submit" value="Submit">
-</form>
-<p>Find out the words that appear the most on your WhatsApp chat.
-Don’t worry, we don’t keep any data you don’t want us to keep :)</p>
-
-<p>You can consult data from a previous session with your session id <a href="{{ url_for('consult') }}">here</a>.</p>
+<div class="col-12">
+    <h3>How To Use</h3>
+</div>
 {%endblock%}

@@ -62,7 +62,7 @@ button:focus {
     text-shadow:1px 1px 0px rgb(2, 4, 2);
 }
 
-/* ------------------------------------------ Headers */
+/* ------------------------------------------ Headings */
 
 h1 {
     font-family: 'Do Hyeon', sans-serif;
@@ -84,6 +84,19 @@ h3 {
     font-size: 30px;
     color: #075E54; 
 }
+
+.btn-large .material-icons {
+    color: #ffffff;
+}
+
+.result-icons {
+    padding: 10px;
+    font-size: 40px;
+    color: #ffffff;
+    text-shadow:2px 2px 0px rgb(2, 4, 2) !important;
+}
+
+
 
 /* ------------------------------------------ INDEX */
 
@@ -160,11 +173,14 @@ h3 {
 
 .result {
     padding: 20px;
+    overflow: hidden;
+    position: relative;
 }
 
 .result p {
     font-size: 18 pt;
     font-family:'Nanum Gothic', sans-serif;
+    margin-bottom: 5px;
 }
 
 .result span{
@@ -201,11 +217,11 @@ h3 {
 }
 
 .white p {
-    color: #075E54;
+    color: #128c7e;
 }
 
 .white span {
-    text-shadow:1px 1px 1px rgb(2, 4, 2);;
+    text-shadow:1px 1px 1px rgb(234, 240, 234);;
 }
 
 .bright {
@@ -217,6 +233,25 @@ h3 {
 }
 
 .bright span {
-    text-shadow:1px 1px 1px rgb(2, 4, 2);;
+    text-shadow:1px 1px 1px rgb(2, 4, 2);
+}
+
+.highlight {
+    color: rgb(213,255,0);
+}
+
+.dark-highlight {
+    color: #032924;
+}
+
+.session_id {
+    font-size: 10pt;
+    text-align: left;
+}
+
+.session_id span {
+    font-weight: bold;
+    font-size: 12pt;
+    font-family: 'Nanum Gothic', sans-serif;
 }
 

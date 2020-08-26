@@ -2,27 +2,21 @@
 
 {%block content%}
 <div class="col-12">
-    <h3>Your results:</h3>
+    <h3>Your results</h3>
 
-    <p class="session_id">
-        Your session id is: <span>{{results._id}}</span>
-    </p>
+    <p class="text-left">Your session id is: {{results._id}}</p>
 
     <!-- ********************************************************* PARTICIPANTS -->
     <div class="row result dark">
         <div class="col-12">
-            <p>
-                <span><i class="material-icons result-icons">group</i></span><br>
-                This is a story about a chat between:<br>
+            <p>This is a story about a chat between:<br>
 
                 {% for person in results.participants %}
                 <span>{{person[0].title()}}</span>,
                 {% endfor%}
-
             </p>
             <p>
-                They have sent <span class="highlight">{{results.messages}}</span> <span>messages</span> in
-                <span>{{results.period_length}}
+                They have sent <span>{{results.messages}} messages</span> in <span>{{results.period_length}}
                     month(s)</span><br>
                 from <span>{{results.period[0]}} to {{results.period[1]}}</span>
             </p>
@@ -32,10 +26,11 @@
     <!-- ********************************************************* LINKS -->
     <div class="row result light">
         <div class="col-12">
-            <p>During this time, they have shared some <span class="dark-highlight">Links</span>! Take a look:<br>
+            <p>During this time, <br>
                 {% for person in results.links %}
-                <span>{{person.title()}}</span> shared <span>{{results.links[person]}} </span><br>
+                <span>{{person.title()}}</span> sent <span>{{results.links[person]}} </span><br>
                 {% endfor%}
+                <span>Links</span>
             </p>
 
         </div>
@@ -44,9 +39,9 @@
     <!-- ********************************************************* MEDIA -->
     <div class="row result white">
         <div class="col-12">
-            <p>And they also shared <span class="dark-highlight">media</span>: <br>
+            <p>And they also shared <span>media:</span> <br>
                 {% for person in results.media %}
-                <span>{{person.title()}}</span> shared <span>{{results.media[person]}} </span><br>
+                <span>{{person.title()}}</span> sent <span>{{results.media[person]}} </span><br>
                 {% endfor%}
                 media files
             </p>
@@ -58,21 +53,18 @@
     <div class="row result bright">
         <div class="col-12">
             <p>
-                <span><i class="material-icons result-icons">grade</i></span><br>
-                The person who sent <span class="highlight">more messages</span> was<br>
-                <span class="highlight">{{results.participants[0][0].title()}}</span>, with
-                <span class="highlight">{{results.participants[0][1]}} messages! </span>
-
-
+                The person who sent <span>more messages</span> was<br>
+                <span>{{results.participants[0][0].title()}} with
+                    {{results.participants[0][1]}} messages! </span>
             </p>
             <p>
-                Followed by:<br>
+                Followed by
                 {% for person in results.participants %}
                 {% if person == results.participants[0] %}
-                {{continue}}
+                -
                 {% else %}
                 <span>{{person[0].title()}}</span> with
-                <span>{{person[1]}} </span> messages<br>
+                <span>{{person[1]}} </span> messages -<br>
                 {% endif %}
                 {% endfor %}
             </p>
@@ -85,9 +77,8 @@
     <div class="row result light">
         <div class="col-12">
             <p>
-                <span><i class="material-icons result-icons">favorite_border</i></span><br>
                 The <span>Word</span> that most appeared in this chat was:<br>
-                <span class="dark-highlight">{{results.words[0][0].title()}}</span><span>:
+                <span>{{results.words[0][0].upper()}} :
                     {{results.words[0][1]}} times! </span>
             </p>
 
@@ -103,7 +94,7 @@
         <div class="col-12">
             <p>
                 The <span>2nd Word</span> that most appeared in this chat was:<br>
-                <span class="dark-highlight">{{results.words[1][0].title()}}</span><span>:
+                <span>{{results.words[1][0].upper()}} :
                     {{results.words[1][1]}} times! </span>
             </p>
 
@@ -118,7 +109,6 @@
     <div class="row result dark">
         <div class="col-12">
             <p>
-                <span><i class="material-icons result-icons">clear_all</i></span><br>
                 Other words that also appeared a lot are:<br>
                 {% for word in results.words %}
                 {% if word == results.words[0] or word == results.words[1] %}
@@ -137,7 +127,7 @@
     <div class="row result bright">
         <div class="col-12">
             <p>The longest word among all words typed was:<br>
-                <span class="highlight">{{results.longest_word}}</span>,<br>
+                <span>{{results.longest_word}}</span>,<br>
                 said by <span>{{results.longest_word_dates[0][1].title()}}</span> on
                 <span>{{results.longest_word_dates[0][0]}}</span>
             </p>
@@ -151,7 +141,7 @@
         <div class="col-12">
             <p>
                 The <span>3 Words</span> that most appeared <span>combined</span> in this chat were:<br>
-                <span>{{results.word_combinations[0][0].upper()}} !
+                <span>{{results.words_combinations[0][0].upper()}} !
             </p>
 
             <div class="container">
@@ -160,18 +150,18 @@
         </div>
     </div>
 
-    <!-- ********************************************************* OTHER WORDS COMBINATIONS-->
+    <!-- ********************************************************* OTHER COMBINED WORDS -->
 
     <div class="row result dark">
         <div class="col-12">
             <p>
-                Other words that also appeared a lot side by side are:<br>
-                {% for word in results.word_combinations %}
-                {% if word == results.word_combinations[0] %}
+                Other words that also appeared a lot side by side were:<br>
+                {% for word in results.words_combinations %}
+                {% if word == results.words[0] %}
                 {{continue}}
                 {% else %}
                 <span>{{word[0]}}</span>,
-                <span>{{word[1]}}</span> times<br>
+                <span>{{word[1]}} </span> times<br>
                 {% endif %}
                 {% endfor %}
             </p>
@@ -179,53 +169,11 @@
         </div>
     </div>
 
-    <!-- ********************************************************* BENFORD'S LAW -->
 
-    <div class="row result light">
-        <div class="col-12">
-            <p>
-                <span><i class="material-icons result-icons">sort</i></span><br>
-                To finish this story, we counted how many <span>characters</span> each message had.
-                Then, all those numbers were grouped according to their <span>leading digit</span>.<br>
-                This chart represents the percentage each leading digit appeared in the character count from your chat:
-            </p>
-            <div class="container">
-                <canvas id="benford"></canvas>
-            </div>
-            <p>
-                Are they constantly or irregularly distributed? If they make a nice descending curve, you must know that
-                your chat
-                follows Benford's law: an observation that <span>random numbers are not as random as we think!</span>
-            </p>
-            <p><a href="https://en.wikipedia.org/wiki/Benford%27s_law" target="_blank">Learn more about Benford's Law
-                    here.</a></p>
-        </div>
-    </div>
-    <!-- ********************************************************* BOTTOM -->
-    <div class="row result">
-        <div class="col-12 col-sm-6">
-            <p class="session_id">
-                Your session id is: <span>{{results._id}}</span><br>
-                Copy this number to consult this page later.
-            </p>
-        </div>
-        <div class="col-12 col-sm-6">
-            <p class="text-center text-sm-right">
-                <a href="{{ url_for('edit_results', results_id=results._id) }}">Restrict the use of this data</a>
-            </p>
-        </div>
-
-        <div class="col-12">
-
-            <p><i class="material-icons">sentiment_very_satisfied</i><br>Did you like this?</p>
-            <a href="{{ url_for('global_words') }}">
-                <button class="btn-large">
-                    Allow this data to be part of the global results!
-                </button>
-            </a><br><br>
-        </div>
-
-    </div>
+    {%for result in results%}
+    <p>{{result}}: {{results[result]}}</p>
+    {%endfor%}
+    <a href="{{ url_for('edit_results', results_id=results._id) }}"><button>Restrict the use of this data</button></a>
 </div>
 
 
@@ -236,14 +184,11 @@
     let word2Chart = chartData("word-2", "{{results.word_2_result}}",
         "monthly use of: {{results.words[1][0].upper()}}", 'times this word appeared', '#128c7e');
     let words1Chart = chartData("words-1", "{{results.word_seq_1_result}}",
-        "monthly use of: {{results.word_combinations[0][0].upper()}}", 'times these words appeared together', '#128c7e');
-    let benford = chartData("benford", "{{results.benford}}",
-        "Benford's Law", "Character count starting with this digit", '#34B7f1');
+        "monthly use of: {{results.words_combinations[0][0].upper()}}", 'times these words appeared together', '#128c7e');
 
     createChart(word1Chart);
     createChart(word2Chart);
-    createChart(words1Chart);
-    createChart(benford);  
+    createChart(words1Chart); 
 </script>
 
 

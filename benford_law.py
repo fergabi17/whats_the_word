@@ -27,18 +27,19 @@ def get_clean_messages(messages, media):
     @media: array
     @returns: array
     Deletes the prefix of the messages and saves the messages body as an array,
-    excluding mentions to media files
+    excluding mentions to media files and links.
     """
+    links_pattern = r'http.+[/s$]'
     clean_messages = []
     for message in messages:
         find_prefix = re.findall(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:', message)
         if len(find_prefix) > 0:
-            message = re.sub(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:', '', message)
+            message = re.sub(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:\s?', '', message)
             for item in media:
                 message = re.sub(fr'[\<\(]?\b{item}\b[\>\)]?', '', message)
             if len(message) > 0:
+                message = re.sub(r'http.+[/s$]', '', message)
                 clean_messages.append(message)
-
     return clean_messages
 
 
@@ -51,7 +52,6 @@ def get_chars_in_messages(clean_messages):
     """
     messages_chars = []
     for message in clean_messages:
-        #messages_chars.append(len(re.findall(r'\w+', message)))
         messages_chars.append(len(message))
         
     return messages_chars
