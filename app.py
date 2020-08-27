@@ -47,8 +47,6 @@ def getfile():
             file = request.files['myfile']
             file_content = file.read().decode()
             results = libs.get_data_from_whats(file_content.lower())
-
-            #inputs = mongo.db.test_inputs
             this_insert = inputs.insert_one(results)
             
             return render_template(
@@ -64,13 +62,11 @@ def getfile():
 @app.route('/edit_results/<results_id>')
 def edit_results(results_id):
     the_input = inputs.find_one({'_id': ObjectId(results_id)})
-    #all_inputs = mongo.db.inputs.find()
     return render_template('edit_results.html', input=the_input)
 
 
 @app.route('/delete_item/<input_id>/<item>')
 def delete_item(input_id, item):
-    inputs = mongo.db.inputs
     inputs.update_one({'_id': ObjectId(input_id)}, {"$set": {item: ""}})
 
     return redirect(url_for('edit_results', results_id=input_id))
@@ -78,16 +74,17 @@ def delete_item(input_id, item):
 
 @app.route('/delete_results/<input_id>')
 def delete_results(input_id):
-    mongo.db.inputs.remove({'_id': ObjectId(input_id)})
+    inputs.remove({'_id': ObjectId(input_id)})
     return redirect(url_for('home'))
 
 
 @app.route('/consultdb', methods=['GET', 'POST'])
+@app.route('/edit_results/consultdb', methods=['GET', 'POST'])
 def consultdb():
     if request.method == 'POST':
         session_id = request.form["session_id"]
         try:
-            the_input = mongo.db.inputs.find_one({'_id': ObjectId(session_id)})
+            the_input = inputs.find_one({'_id': ObjectId(session_id)})
             return render_template('display_result.html', results=the_input)
         except:
             return render_template('issue.html',

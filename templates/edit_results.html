@@ -1,11 +1,89 @@
 {%extends 'base.html'%}
 
 {%block content%}
-<h3>Your results in the database</h3>
-    {% for item in input%}
-    <p>{{item}} : {{input[item]}} <a href="{{ url_for('delete_item', input_id=input._id, item=item) }}">delete</a></p>
-    {% endfor %}
-    <hr>
-    <a href="{{ url_for('delete_results', input_id=input._id) }}"><button>Delete all my results</button></a>
+<div class="col-12">
+    <h3>Your results in the database</h3><br>
+    <div class="row results light">
+        <div class="col-12">
+            <p>
+                You can check here all results that were stored from your session.<br>
+                If you'd like to remove something, just press remove.
+            </p>
+
+            <p class="tiny-text">
+                Results for session id: {{input._id}}
+            </p>
+           
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="col-12 how-to">
+            <hr>
+            {% for item in input%}
+                {% if item != "_id" and input[item] != "" %}
+                    {% if item == "messages" or item == "period_length" or item == "longest_word"%}
+                        <p>
+                            {{item}}: {{input[item]}}
+                        </p>
+                        <p>
+                            <a href="{{ url_for('delete_item', input_id=input._id, item=item) }}">remove</a>
+                        </p>
+
+                    {% elif item == "participants" or item == "words" or item == "word_combinations" or item == "longest_word_dates" %}
+                        <p>{{item}}:<br>
+                        {% for participant in input[item] %}
+                                {{participant[0]}},&nbsp;{{participant[1]}}&nbsp;/
+                        {% endfor %}
+                        </p>
+                        <p>
+                            <a href="{{ url_for('delete_item', input_id=input._id, item=item) }}">remove</a>
+                        </p>
+                        
+                    {% else %}
+                        <p>{{item}}:<br>
+                            {% for participant in input[item] %}
+                                    {{participant}},&nbsp;{{input[item][participant]}}&nbsp;/
+                            {% endfor %}
+                        </p>
+                        <p>
+                            <a href="{{ url_for('delete_item', input_id=input._id, item=item) }}">remove</a>
+                        </p>
+                        
+                    {% endif %}
+                    <hr>
+                {% endif %}   
+            {% endfor %}
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-4">
+            <p>
+                <form action="consultdb" method="POST">
+                    <input type="text" name="session_id" value="{{input._id}}">
+                    <input class="btn-large" type="submit" value="Go back to my results">
+                </form>
+            </p>
+        </div>
+        <div class="col-12 col-sm-4">
+            <p><i class="material-icons">sentiment_very_satisfied</i><br>
+                <a href="{{ url_for('global_words') }}">
+                    <button class="btn-large">
+                        Allow this data to be part of the global results!
+                    </button>
+                </a>
+            </p>
+        </div>
+        <div class="col-12 col-sm-4">
+            <p><i class="material-icons">sentiment_very_satisfied</i><br>
+                <a href="{{ url_for('delete_results', input_id=input._id) }}">
+                    <button>Delete all my results</button>
+                </a>
+            </p>
+        </div>
+    </div>
+
+</div>
 
 {%endblock%}

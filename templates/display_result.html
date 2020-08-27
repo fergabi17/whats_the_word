@@ -17,6 +17,8 @@
 
                 {% for person in results.participants %}
                 <span>{{person[0].title()}}</span>,
+                {% else %}
+                <span>some nice people</span>
                 {% endfor%}
 
             </p>
@@ -32,31 +34,34 @@
     <!-- ********************************************************* LINKS -->
     <div class="row result light">
         <div class="col-12">
+            {% if results.participants|length %}
             <p>During this time, they have shared some <span class="dark-highlight">Links</span>! Take a look:<br>
                 {% for person in results.links %}
                 <span>{{person.title()}}</span> shared <span>{{results.links[person]}} </span><br>
                 {% endfor%}
             </p>
-
+            {% endif %}
         </div>
     </div>
 
     <!-- ********************************************************* MEDIA -->
     <div class="row result white">
         <div class="col-12">
+            {% if results.media|length %}
             <p>And they also shared <span class="dark-highlight">media</span>: <br>
                 {% for person in results.media %}
                 <span>{{person.title()}}</span> shared <span>{{results.media[person]}} </span><br>
                 {% endfor%}
                 media files
             </p>
-
+            {% endif %}
         </div>
     </div>
 
     <!-- ********************************************************* MESSAGES -->
     <div class="row result bright">
         <div class="col-12">
+            {% if results.participants|length %}
             <p>
                 <span><i class="material-icons result-icons">grade</i></span><br>
                 The person who sent <span class="highlight">more messages</span> was<br>
@@ -76,7 +81,7 @@
                 {% endif %}
                 {% endfor %}
             </p>
-
+            {% endif %}
         </div>
     </div>
 
