@@ -34,6 +34,7 @@ button:focus {
 
 .nav {
     text-decoration: none;
+    justify-content: center;
 }
 
 .nav ul {
