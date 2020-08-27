@@ -1,23 +1,22 @@
 import os
 import io
 import re
-from flask import Flask, render_template, redirect, request, url_for
+from os import path
+from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
-
 import libs
 
+if path.exists("env.py"):
+    import env
+
 app = Flask(__name__)
-app.config["MONGO_DBNAME"] = 'whats_the_word'
-# Create an environment variable to save this path
-app.config["MONGO_URI"] = os.getenv(
-    'MONGO_URI',
-    'mongodb+srv://root:F3rnand4@myfirstcluster.g4xto.mongodb.net/whats_the_word?retryWrites=true&w=majority'
-)
+app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
+app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
 mongo = PyMongo(app)
-
+inputs = mongo.db.test_inputs
 
 @app.route('/')
 def home():
@@ -36,8 +35,7 @@ def how_to_use():
 
 @app.route('/global_words')
 def global_words():
-
-    inputs = mongo.db.inputs
+    #inputs = mongo.db.test_inputs
     count = inputs.find().count()
     return render_template('global_words.html', count=count)
 
@@ -50,7 +48,7 @@ def getfile():
             file_content = file.read().decode()
             results = libs.get_data_from_whats(file_content.lower())
 
-            inputs = mongo.db.inputs
+            #inputs = mongo.db.test_inputs
             this_insert = inputs.insert_one(results)
             
             return render_template(
@@ -65,7 +63,7 @@ def getfile():
 
 @app.route('/edit_results/<results_id>')
 def edit_results(results_id):
-    the_input = mongo.db.inputs.find_one({'_id': ObjectId(results_id)})
+    the_input = inputs.find_one({'_id': ObjectId(results_id)})
     #all_inputs = mongo.db.inputs.find()
     return render_template('edit_results.html', input=the_input)
 
