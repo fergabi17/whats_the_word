@@ -1,6 +1,34 @@
 {%extends 'base.html'%}
 {%block content%}
 <div class="col-12">
-    <h3>How To Use</h3>
+    <h3>How To Use</h3><br>
+    <div class="row">
+        <div class="col-12 how-to">
+            <p>
+                To verify the words in your chat, first you need to export the chat history.<br>
+                You can use the export chat feature to export a copy of the chat history from an individual or group
+                chat.
+            </p>
+
+            <p class="tiny-text">
+                Note: This feature isn’t supported in Germany.
+            </p>
+
+            <p>
+            <ol>
+                <li>Open the individual or group chat on WhatsApp (not the web version)</li>
+                <li>Tap <span>More options > More > Export chat</span> </li>
+                <li>Choose to export <span>without media</span> (otherwise results might be affected)</li>
+                <li>Save your chat history</li>
+                <li>Upload the .txt file <a href="{{ url_for('home') }}">here</a></li>
+            </ol>
+            </p>
+            <p class="text-center light">
+                Don't forget to save your session id to consult or delete your results in the future :)
+            </p>
+
+        </div>
+    </div>
+
 </div>
 {%endblock%}
