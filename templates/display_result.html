@@ -23,10 +23,13 @@
 
             </p>
             <p>
-                They have sent <span class="highlight">{{results.messages}}</span> <span>messages</span> in
-                <span>{{results.period_length}}
-                    month(s)</span><br>
+                They have sent <span class="highlight">{{results.messages}}</span> <span>messages</span>
+                {% if results.period_length != "" %}
+                in <span>{{results.period_length}} month(s)</span><br>
+                {% endif %}
+                {% if results.period | length %}
                 from <span>{{results.period[0]}} to {{results.period[1]}}</span>
+                {% endif %}
             </p>
         </div>
     </div>
@@ -34,7 +37,7 @@
     <!-- ********************************************************* LINKS -->
     <div class="row result light">
         <div class="col-12">
-            {% if results.participants|length %}
+            {% if results.links | length %}
             <p>During this time, they have shared some <span class="dark-highlight">Links</span>! Take a look:<br>
                 {% for person in results.links %}
                 <span>{{person.title()}}</span> shared <span>{{results.links[person]}} </span><br>
@@ -47,7 +50,7 @@
     <!-- ********************************************************* MEDIA -->
     <div class="row result white">
         <div class="col-12">
-            {% if results.media|length %}
+            {% if results.media | length %}
             <p>And they also shared <span class="dark-highlight">media</span>: <br>
                 {% for person in results.media %}
                 <span>{{person.title()}}</span> shared <span>{{results.media[person]}} </span><br>
@@ -89,16 +92,20 @@
 
     <div class="row result light">
         <div class="col-12">
+            {% if results.words|length %}
             <p>
                 <span><i class="material-icons result-icons">favorite_border</i></span><br>
                 The <span>Word</span> that most appeared in this chat was:<br>
                 <span class="dark-highlight">{{results.words[0][0].title()}}</span><span>:
                     {{results.words[0][1]}} times! </span>
             </p>
-
+            {% endif %}
+            <!-- ******************************************** CHART 1 -->
+            {% if results.word_1_result != "" %}
             <div class="container">
                 <canvas id="word-1"></canvas>
             </div>
+            {% endif %}
         </div>
     </div>
 
@@ -106,15 +113,19 @@
 
     <div class="row result white">
         <div class="col-12">
+            {% if results.words|length %}
             <p>
                 The <span>2nd Word</span> that most appeared in this chat was:<br>
                 <span class="dark-highlight">{{results.words[1][0].title()}}</span><span>:
                     {{results.words[1][1]}} times! </span>
             </p>
-
+            {% endif %}
+            <!-- ******************************************** CHART 2 -->
+            {% if results.word_2_result != "" %}
             <div class="container">
                 <canvas id="word-2"></canvas>
             </div>
+            {% endif %}
         </div>
     </div>
 
@@ -122,6 +133,7 @@
 
     <div class="row result dark">
         <div class="col-12">
+            {% if results.words|length %}
             <p>
                 <span><i class="material-icons result-icons">clear_all</i></span><br>
                 Other words that also appeared a lot are:<br>
@@ -134,19 +146,23 @@
                 {% endif %}
                 {% endfor %}
             </p>
-
+            {% endif %}
         </div>
     </div>
 
     <!-- ********************************************************* LONGEST WORD -->
     <div class="row result bright">
         <div class="col-12">
+            {% if results.longest_word|length %}
             <p>The longest word among all words typed was:<br>
-                <span class="highlight">{{results.longest_word}}</span>,<br>
+                <span class="highlight">{{results.longest_word}}</span>
+                {% if results.longest_word_dates|length %}
+                ,<br>
                 said by <span>{{results.longest_word_dates[0][1].title()}}</span> on
                 <span>{{results.longest_word_dates[0][0]}}</span>
+                {% endif %}
             </p>
-
+            {% endif %}
         </div>
     </div>
 
@@ -154,14 +170,18 @@
 
     <div class="row result white">
         <div class="col-12">
+            {% if results.word_combinations|length %}
             <p>
                 The <span>3 Words</span> that most appeared <span>combined</span> in this chat were:<br>
                 <span>{{results.word_combinations[0][0].upper()}} !
             </p>
-
+            {% endif %}
+            <!-- ******************************************** CHART 3 -->
+            {% if results.word_seq_1_result != "" %}
             <div class="container">
                 <canvas id="words-1"></canvas>
             </div>
+            {% endif %}
         </div>
     </div>
 
@@ -169,6 +189,7 @@
 
     <div class="row result dark">
         <div class="col-12">
+            {% if results.word_combinations|length %}
             <p>
                 Other words that also appeared a lot side by side are:<br>
                 {% for word in results.word_combinations %}
@@ -180,7 +201,7 @@
                 {% endif %}
                 {% endfor %}
             </p>
-
+            {% endif %}
         </div>
     </div>
 
@@ -190,15 +211,25 @@
         <div class="col-12">
             <p>
                 <span><i class="material-icons result-icons">sort</i></span><br>
-                To finish this story, we counted how many <span>characters</span> each message had.
-                Then, all those numbers were grouped according to their <span>leading digit</span>.<br>
+                To finish this story, we counted how many <span>characters</span> each message had.<br>
+                Then, all those numbers were grouped according to their <span>leading digit</span>.
+                {% if results.benford != "" %}
+                <br>
                 This chart represents the percentage each leading digit appeared in the character count from your chat:
             </p>
+            <!-- ******************************************** CHART BENFORD'S -->
+
             <div class="container">
                 <canvas id="benford"></canvas>
             </div>
+
             <p>
-                Are they constantly or irregularly distributed? If they make a nice descending curve, you must know that
+                Are they constantly or irregularly distributed?
+                {% else %}
+            </p>
+            <p>
+                {% endif %}
+                If they make a nice descending curve, you must know that
                 your chat
                 follows Benford's law: an observation that <span>random numbers are not as random as we think!</span>
             </p>
@@ -222,12 +253,32 @@
 
         <div class="col-12">
 
-            <p><i class="material-icons">sentiment_very_satisfied</i><br>Did you like this?</p>
-            <a href="{{ url_for('global_words') }}">
-                <button class="btn-large">
-                    Allow this data to be part of the global results!
-                </button>
-            </a><br><br>
+            <p>
+                <i class="material-icons">sentiment_very_satisfied</i><br>
+                Did you like this?
+            </p>
+
+
+            <div class="row">
+                <div class="col-12">
+                    <a href="{{ url_for('home') }}">
+                        <button class="btn-large light">
+                            Create a new story
+                        </button>
+                    </a>
+
+
+                    <a href="{{ url_for('global_words') }}">
+                        <button class="btn-large green">
+                            See global results
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+
+
+
         </div>
 
     </div>
@@ -236,19 +287,27 @@
 
 
 <script>
-    let word1Chart = chartData("word-1", "{{results.word_1_result}}",
-        "monthly use of: {{results.words[0][0].upper()}}", 'times this word appeared', '#075E54');
-    let word2Chart = chartData("word-2", "{{results.word_2_result}}",
-        "monthly use of: {{results.words[1][0].upper()}}", 'times this word appeared', '#128c7e');
-    let words1Chart = chartData("words-1", "{{results.word_seq_1_result}}",
-        "monthly use of: {{results.word_combinations[0][0].upper()}}", 'times these words appeared together', '#128c7e');
-    let benford = chartData("benford", "{{results.benford}}",
-        "Benford's Law", "Character count starting with this digit", '#34B7f1');
+    if ("{{results.word_1_result}}" != "") {
+        let word1Chart = chartData("word-1", "{{results.word_1_result}}",
+            "monthly use of this word", 'times this word appeared', '#075E54');
+        createChart(word1Chart);
+    };
+    if ("{{results.word_2_result}}" != "") {
+        let word2Chart = chartData("word-2", "{{results.word_2_result}}",
+            "monthly use of this word", 'times this word appeared', '#128c7e');
+        createChart(word2Chart);
+    };
+    if ("{{results.word_seq_1_result}}" != "") {
+        let words1Chart = chartData("words-1", "{{results.word_seq_1_result}}",
+            "monthly use of this word", 'times these words appeared together', '#128c7e');
+        createChart(words1Chart);
+    }
+    if ("{{results.benford}}" != "") {
+        let benford = chartData("benford", "{{results.benford}}",
+            "Benford's Law", "Character count starting with this digit", '#34B7f1');
+        createChart(benford);
+    };
 
-    createChart(word1Chart);
-    createChart(word2Chart);
-    createChart(words1Chart);
-    createChart(benford);  
 </script>
 
 

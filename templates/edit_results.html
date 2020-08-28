@@ -4,7 +4,7 @@
 <div class="col-12">
     <h3>Your results in the database</h3><br>
     <div class="row results light">
-        <div class="col-12">
+        <div class="col-12 edit-text">
             <p>
                 You can check here all results that were stored from your session.<br>
                 If you'd like to remove something, just press remove.
@@ -58,28 +58,32 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-sm-4">
+        <div class="col-12">
+            <p>
+                <a href="{{ url_for('delete_results', input_id=input._id) }}">
+                    Delete all my results
+                </a>
+            </p>
+        </div>
+        <div class="col-12 col-sm-6">
             <p>
                 <form action="consultdb" method="POST">
-                    <input type="text" name="session_id" value="{{input._id}}">
-                    <input class="btn-large" type="submit" value="Go back to my results">
+                    <input type="text" name="session_id" value="{{input._id}}" class="d-none">
+                    <i class="material-icons">reply</i><br>
+                    <input class="btn-large dark" type="submit" value="Back to my results">
                 </form>
             </p>
         </div>
-        <div class="col-12 col-sm-4">
-            <p><i class="material-icons">sentiment_very_satisfied</i><br>
+        <div class="col-12 col-sm-6">
+            <p>
+                <form>
+                <i class="material-icons">sentiment_very_satisfied</i><br>
                 <a href="{{ url_for('global_words') }}">
-                    <button class="btn-large">
-                        Allow this data to be part of the global results!
+                    <button class="btn-large dark">  
+                            Allow this data to be part of the global results!
                     </button>
                 </a>
-            </p>
-        </div>
-        <div class="col-12 col-sm-4">
-            <p><i class="material-icons">sentiment_very_satisfied</i><br>
-                <a href="{{ url_for('delete_results', input_id=input._id) }}">
-                    <button>Delete all my results</button>
-                </a>
+                </form>
             </p>
         </div>
     </div>

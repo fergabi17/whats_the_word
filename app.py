@@ -35,7 +35,6 @@ def how_to_use():
 
 @app.route('/global_words')
 def global_words():
-    #inputs = mongo.db.test_inputs
     count = inputs.find().count()
     return render_template('global_words.html', count=count)
 
@@ -82,14 +81,15 @@ def delete_results(input_id):
 @app.route('/edit_results/consultdb', methods=['GET', 'POST'])
 def consultdb():
     if request.method == 'POST':
-        session_id = request.form["session_id"]
         try:
+            session_id = request.form["session_id"]
             the_input = inputs.find_one({'_id': ObjectId(session_id)})
-            return render_template('display_result.html', results=the_input)
+            the_input_id = the_input["_id"]
+            return render_template('display_result.html', results=the_input, the_input_id=the_input_id)
         except:
             return render_template('issue.html',
-                                   issue="session_id",
-                                   session_id=session_id)
+                                    issue="session_id",
+                                    session_id=session_id)
 
 
 if __name__ == '__main__':

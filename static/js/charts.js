@@ -58,4 +58,5 @@ function createChart(chartObject) {
             }
         }
     });
+    return true;
 }

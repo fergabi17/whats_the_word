@@ -1,8 +1,19 @@
 {%extends 'base.html'%}
 {%block content%}
-<h3>Consult</h3>
-<form action="consultdb" method="POST">
-    Paste here your session's id: <input type="text" name="session_id"><br>
-    <input type="submit" value="Consult">
-</form>
+<div class="col-12">
+    <h3>Consult:</h3>
+    <div class="row results">
+        <div class="col-12">
+            <form action="consultdb" method="POST">
+                <p>
+                    Paste here your session's id:
+                </p>
+                <p>
+                    <input type="text" name="session_id" style="width: 400px;">
+                </p>
+                <input type="submit" class="btn-large dark" value="Consult" >
+            </form>
+        </div>
+    </div>
+</div>
 {%endblock%}

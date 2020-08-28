@@ -83,7 +83,7 @@ h3 {
 
 .material-icons {
     font-size: 30px;
-    color: #075E54; 
+    color: #25D366; 
 }
 
 .btn-large .material-icons {
@@ -134,18 +134,19 @@ h3 {
 .btn-large {
     width: 200px;
     height: 100px;
-    background-color: #075E54; 
     color: #ffffff;
     font-family:'Do Hyeon', sans-serif;
+    line-height: 120%;
     letter-spacing: 2px;
     border: 0px;
-    border-radius: 20px;
+    border-radius: 10px;
+    margin:10px;
 }
 
 .btn-large:hover{
     background-color: #25D366;
     color: #ffffff;
-    border: solid 3px black;
+    border: dashed 2px black;
 }
 
 /* ------------------------------------------ FOOTER */
@@ -226,12 +227,24 @@ h3 {
     background-color: #34B7f1;
 }
 
+.green {
+    background-color: #25D366;
+}
+
 .bright p {
     color: #ffffff;
 }
 
 .bright span {
     text-shadow:1px 1px 1px rgb(2, 4, 2);
+}
+
+.light a {
+    color: #34B7f1;
+}
+
+.light a:hover {
+    color: #25D366;
 }
 
 .highlight {
@@ -268,4 +281,9 @@ h3 {
 
 ol {
     line-height: 30pt;
+}
+
+.edit-text {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
