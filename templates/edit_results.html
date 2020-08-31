@@ -3,6 +3,17 @@
 {%block content%}
 <div class="col-12">
     <h3>Your results in the database</h3><br>
+
+<!-- ********************************************************* FLASH MESSAGES -->
+    {% with messages = get_flashed_messages() %} 
+        {% if messages %}
+            {% for message in messages %}
+            <p class="flashed">{{ message }}</p>
+            {% endfor %}
+        {% endif %} 
+    {% endwith %}
+
+ <!-- ********************************************************* TEXT -->   
     <div class="row results light">
         <div class="col-12 edit-text">
             <p>
@@ -22,6 +33,7 @@
             <hr>
             {% for item in input%}
                 {% if item != "_id" and input[item] != "" %}
+                <!-- ********************************************************* STRINGS -->
                     {% if item == "messages" or item == "period_length" or item == "longest_word"%}
                         <p>
                             {{item}}: {{input[item]}}
@@ -29,7 +41,7 @@
                         <p>
                             <a href="{{ url_for('delete_item', input_id=input._id, item=item) }}">remove</a>
                         </p>
-
+                <!-- ********************************************************* LISTS -->
                     {% elif item == "participants" or item == "words" or item == "word_combinations" or item == "longest_word_dates" %}
                         <p>{{item}}:<br>
                         {% for participant in input[item] %}
@@ -39,7 +51,7 @@
                         <p>
                             <a href="{{ url_for('delete_item', input_id=input._id, item=item) }}">remove</a>
                         </p>
-                        
+                 <!-- ********************************************************* DICTS -->       
                     {% else %}
                         <p>{{item}}:<br>
                             {% for participant in input[item] %}
@@ -57,6 +69,8 @@
 
         </div>
     </div>
+
+    <!-- ********************************************************* DELETE ALL -->
     <div class="row">
         <div class="col-12">
             <p>
@@ -65,6 +79,7 @@
                 </a>
             </p>
         </div>
+    <!-- ********************************************************* CONSULT -->
         <div class="col-12 col-sm-6">
             <p>
                 <form action="consultdb" method="POST">
@@ -74,6 +89,7 @@
                 </form>
             </p>
         </div>
+    <!-- ********************************************************* GLOBAL RESULTS -->
         <div class="col-12 col-sm-6">
             <p>
                 <form>

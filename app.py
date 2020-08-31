@@ -12,6 +12,7 @@ if path.exists("env.py"):
     import env
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("SECRET_KEY")
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
@@ -60,20 +61,25 @@ def getfile():
 
 @app.route('/edit_results/<results_id>')
 def edit_results(results_id):
-    the_input = inputs.find_one({'_id': ObjectId(results_id)})
-    return render_template('edit_results.html', input=the_input)
-
+    try:
+        the_input = inputs.find_one({'_id': ObjectId(results_id)})
+        return render_template('edit_results.html', input=the_input)
+    except:
+        return render_template('issue.html',
+                                    issue="session_id",
+                                    session_id=results_id)
 
 @app.route('/delete_item/<input_id>/<item>')
 def delete_item(input_id, item):
     inputs.update_one({'_id': ObjectId(input_id)}, {"$set": {item: ""}})
-
+    flash("Your information was successfully removed!")
     return redirect(url_for('edit_results', results_id=input_id))
 
 
 @app.route('/delete_results/<input_id>')
 def delete_results(input_id):
     inputs.remove({'_id': ObjectId(input_id)})
+    flash("Your results were successfully deleted!")
     return redirect(url_for('home'))
 
 

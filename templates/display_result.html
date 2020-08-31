@@ -157,7 +157,7 @@
             <p>The longest word among all words typed was:<br>
                 <span class="highlight">{{results.longest_word}}</span>
                 {% if results.longest_word_dates|length %}
-                ,<br>
+                <br>
                 said by <span>{{results.longest_word_dates[0][1].title()}}</span> on
                 <span>{{results.longest_word_dates[0][0]}}</span>
                 {% endif %}
@@ -262,14 +262,13 @@
             <div class="row">
                 <div class="col-12">
                     <a href="{{ url_for('home') }}">
-                        <button class="btn-large light">
+                        <button class="btn-large dark">
                             Create a new story
                         </button>
                     </a>
 
-
                     <a href="{{ url_for('global_words') }}">
-                        <button class="btn-large green">
+                        <button class="btn-large dark">
                             See global results
                         </button>
                     </a>

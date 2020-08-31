@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" type="text/css">
+    <!-- JS -->
+    <script src="../static/js/script.js"></script>
     <!-- Charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
     <script src="../static/js/charts.js"></script>
@@ -22,6 +24,7 @@
 
 <body>
     <div class="container container-color">
+        <!-- ********************************************************* NAV -->
         <div class="row">
             <div class="col-12 nav-wrapper">
                 <nav>
@@ -41,6 +44,8 @@
                 </nav>
             </div>
         </div>
+
+        <!-- ********************************************************* CONTENT -->
         <div class="row text-center">
             <div class="col-12">
                 <h1>Whats <br>the word?</h1>
@@ -50,6 +55,7 @@
             {% endblock %}
         </div>
 
+        <!-- ********************************************************* FOOTER -->
         <footer>
             <div class="row">
                 <div class="col-12 p-0">
@@ -60,7 +66,6 @@
                 </div>
             </div>
         </footer>
-
 
     </div>
 </body>

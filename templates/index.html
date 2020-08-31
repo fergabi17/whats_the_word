@@ -2,7 +2,7 @@
 {%block content%}
 <div class="col-12">
     <p class="main-text">Find out the words that appear the most <br>on your WhatsApp chat!<br>
-        <span class="tiny-text">Don’t worry, we don’t keep any data you don’t allow us to keep =)</span></p>
+        <span class="tiny-text">Don’t worry, we don’t keep any data you don’t want us to keep =)</span></p>
 
     <p class="spacious-p">
         <i class="material-icons">file_upload</i>
@@ -15,20 +15,31 @@
                 <input type="file" name="myfile" class="file-input">
             </p>
         </div>
-
-
-
+<!-- ********************************************************* LOADING -->
+        <div id="loading" class="loading-hidden">
+        </div>
+        
+<!-- ********************************************************* SUBMIT -->
         <p>
-            <a><input class="btn-large green" type="submit" value="Check this chat!"></a>
+            <a><input class="btn-large dark" type="submit" value="Check this chat!" onclick="showLoading()"></a>
         </p>
 
     </form>
+   
+ <!-- ********************************************************* FLASH MESSAGES -->   
+    {% with messages = get_flashed_messages() %} 
+        {% if messages %}
+            {% for message in messages %}
+            <p class="flashed">{{ message }}</p>
+            {% endfor %}
+        {% endif %} 
+    {% endwith %}
 </div>
-<div class="col-12">
 
+<!-- ********************************************************* CONSULT -->
+<div class="col-12">
     <p class="spacious-p">You can consult data from a previous session with your session id <a
             href="{{ url_for('consult') }}"><b>here</b></a>.
     </p>
-
 </div>
 {%endblock%}
