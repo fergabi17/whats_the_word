@@ -25,7 +25,12 @@
             <p>
                 They have sent <span class="highlight">{{results.messages}}</span> <span>messages</span>
                 {% if results.period_length != "" %}
-                in <span>{{results.period_length}} month(s)</span><br>
+                    in 
+                    {% if results.period_length != 0 %}
+                        <span>{{results.period_length}} month(s)</span><br>
+                    {% else %}
+                        <span>less than a month</span><br>
+                    {% endif %}
                 {% endif %}
                 {% if results.period | length %}
                 from <span>{{results.period[0]}} to {{results.period[1]}}</span>
