@@ -1,5 +1,7 @@
 import re
 import json
+import pymongo
+import math
 from collections import Counter
 
 import benford_law
@@ -394,5 +396,63 @@ def get_word_combinations(messages_body):
     all_words_combinations = re.findall(r'\b[\w\-\']+\s[\w\-\']+\s[\w\-\']+', messages_body)
 
     return Counter(all_words_combinations).most_common(5)
+
+
+def get_global_results(inputs):
+    """
+    @inputs: inputs obj from the database
+    @returns: dict
+    Process data along all the inputs
+    from the database and returns the most commom
+    """
+    #inputs = inputs.find()
+    global_results = {
+        'benford': get_global_benford(inputs.find()),
+        'count': inputs.find().count(),
+        'words': get_global_words(inputs.find())
+    }
+    return global_results
+
+def get_global_words(inputs):
+    """
+    @inputs: cursor
+    @returns: array of tuples
+    Gathers all the most common words among all 
+    inputs and returns the 20 most commom from them
+    """
+    all_words = []
+    for the_input in inputs:
+        for word_tuple in the_input["words"]:
+            all_words.append(word_tuple[0])
+    return Counter(all_words).most_common(20)
+
+
+def get_global_benford(inputs):
+    """
+    @inputs: cursor
+    @returns: array of tuples
+    Gathers all the most common words among all 
+    inputs and returns the 20 most commom from them
+    """
+    global_benford = {
+        '1':0,
+        '2':0,
+        '3':0,
+        '4':0,
+        '5':0,
+        '6':0,
+        '7':0,
+        '8':0,
+        '9':0
+    }
+    for the_input in inputs:
+        for digit in the_input['benford']:
+            global_benford[digit] = global_benford[digit] + the_input['benford'][digit]
+        
+    for digit in global_benford:
+        global_benford[digit] = math.floor(global_benford[digit] * 100 / inputs.count())
+    
+    return global_benford 
+
 
 

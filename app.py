@@ -36,8 +36,8 @@ def how_to_use():
 
 @app.route('/global_words')
 def global_words():
-    count = inputs.find().count()
-    return render_template('global_words.html', count=count)
+    global_results = libs.get_global_results(inputs)
+    return render_template('global_words.html', global_results=global_results)
 
 
 @app.route('/getfile', methods=['GET', 'POST'])
