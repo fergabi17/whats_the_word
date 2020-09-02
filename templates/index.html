@@ -1,8 +1,17 @@
 {%extends 'base.html'%}
 {%block content%}
 <div class="col-12">
-    <p class="main-text">Find out the words that appear the most <br>on your WhatsApp chat!<br>
+    <p class="main-text">Find out the words<br class="d-block d-sm-none"> that appear the&nbsp;most <br>on your WhatsApp&nbsp;chat!<br>
         <span class="tiny-text">Don’t worry, we don’t keep any data you don’t want us to keep =)</span></p>
+
+    <!-- ********************************************************* FLASH MESSAGES -->   
+    {% with messages = get_flashed_messages() %} 
+        {% if messages %}
+            {% for message in messages %}
+            <p class="flashed">{{ message }}</p>
+            {% endfor %}
+        {% endif %} 
+    {% endwith %}
 
     <p class="spacious-p">
         <i class="material-icons">file_upload</i>
@@ -26,14 +35,6 @@
 
     </form>
    
- <!-- ********************************************************* FLASH MESSAGES -->   
-    {% with messages = get_flashed_messages() %} 
-        {% if messages %}
-            {% for message in messages %}
-            <p class="flashed">{{ message }}</p>
-            {% endfor %}
-        {% endif %} 
-    {% endwith %}
 </div>
 
 <!-- ********************************************************* CONSULT -->

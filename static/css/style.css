@@ -74,6 +74,16 @@ button:focus {
     text-shadow:1px 1px 0px rgb(2, 4, 2);
 }
 
+/* ---------- Nav for phones */
+@media only screen and (max-width: 767px) {
+    .nav li {
+        padding: 10px;
+    }
+    .nav a {
+        size: 14pt;
+    }
+}
+
 /* ------------------------------------------ Headings */
 
 h1 {
@@ -122,7 +132,7 @@ h3 {
 }
 
 .main-text {
-    font-size: 18pt;
+    font-size: 16pt;
     font-weight: bolder;
     line-height: 130%;
     text-align: center;
@@ -161,6 +171,18 @@ h3 {
     border: dashed 2px black;
 }
 
+/* ---------- Index for phones */
+@media only screen and (max-width: 767px) {
+    .file-input {
+        font-size: 8pt;
+        padding: 10px 0;
+    }
+    .spacious-p {
+        margin-top: 60px;
+        margin-bottom: 0;
+    }
+}
+
 /* ------------------------------------------ FOOTER */
 
 .footer {
@@ -178,6 +200,14 @@ h3 {
     margin: 60px;
     font-size: 32px;
     font-family: 'Lucida Sans', sans-serif;
+}
+
+/* ---------- Issue for phones */
+@media only screen and (max-width: 767px) {
+    .issue {
+        margin: 20px;
+        font-size: 26px;
+    }
 }
 
 /* ------------------------------------------ RESULTS */
@@ -278,6 +308,13 @@ h3 {
     font-family: 'Nanum Gothic', sans-serif;
 }
 
+/* ---------- Results for phones */
+@media only screen and (max-width: 767px) {
+    .did-you-like{
+        margin-top: 40px;
+    }
+}
+
 /* ------------------------------------------ HOW TO USE */
 
 .chat-image{
@@ -311,6 +348,18 @@ ol li{
     padding-bottom: 30px;
 }
 
+/* ---------- How-to-use for phones */
+@media only screen and (max-width: 767px) {
+    .chat-image{
+        height: 150px;
+        margin: 5px;
+    }
+    .how-to {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
 /* ------------------------------------------ FLASHED */
 
 .flashed {
@@ -330,4 +379,17 @@ ol li{
 
 .loading-hidden {
     display: none;
+}
+
+/* ------------------------------------------ CONSULT */
+
+.session_id {
+    width: 400px;
+}
+
+/* ---------- Consult for phones */
+@media only screen and (max-width: 767px) {
+    .session_id {
+        width: 100%;
+    }
 }
