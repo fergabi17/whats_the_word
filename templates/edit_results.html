@@ -84,24 +84,25 @@
     <!-- ********************************************************* CONSULT -->
         <div class="col-12 col-sm-6">
             <p>
-                <form action="consultdb" method="POST">
-                    <input type="text" name="session_id" value="{{input._id}}" class="d-none">
-                    <i class="material-icons">reply</i><br>
-                    <input class="btn-large dark" type="submit" value="Back to my results">
-                </form>
+
+                <i class="material-icons">reply</i><br>
+                <a href="{{ url_for('display_results', session_id = input._id) }}">
+                    <button class="btn-large dark">  
+                            Back to my results
+                    </button>
+                </a>
+
             </p>
         </div>
     <!-- ********************************************************* GLOBAL RESULTS -->
         <div class="col-12 col-sm-6">
             <p>
-                <form>
                 <i class="material-icons">sentiment_very_satisfied</i><br>
                 <a href="{{ url_for('global_words') }}">
                     <button class="btn-large dark">  
                             Allow this data to be part of the global results!
                     </button>
                 </a>
-                </form>
             </p>
         </div>
     </div>

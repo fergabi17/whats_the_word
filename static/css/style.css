@@ -308,10 +308,26 @@ h3 {
     font-family: 'Nanum Gothic', sans-serif;
 }
 
+#sharable-link {
+    width: 400px;
+    color: rgb(194, 193, 193);
+    font-size: 12pt;
+}
+
+.sharable-btn {
+    font-size: 12pt;
+    border: 0;
+    color: #032924;
+    border-radius: 3px;
+}
+
 /* ---------- Results for phones */
 @media only screen and (max-width: 767px) {
     .did-you-like{
         margin-top: 40px;
+    }
+    #sharable-link {
+        width: 100%;
     }
 }
 

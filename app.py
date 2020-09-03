@@ -48,15 +48,23 @@ def getfile():
             file_content = file.read().decode()
             results = libs.get_data_from_whats(file_content.lower())
             this_insert = inputs.insert_one(results)
-            
-            return render_template(
-                'display_result.html',
-                results= results
-            )
+            return redirect(url_for('display_results', session_id=results['_id']))
         except:
             return render_template('issue.html', issue="input")
-
     return redirect(url_for('home'))
+
+
+@app.route('/edit_results/consultdb/<session_id>')
+@app.route('/getfile/<session_id>')
+def display_results(session_id):
+    try:
+        the_input = inputs.find_one({'_id': ObjectId(session_id)})
+        the_input_id = the_input["_id"]
+        return render_template('display_result.html', results=the_input, the_input_id=the_input_id)
+    except:
+        return render_template('issue.html',
+                                issue = "session_id",
+                                session_id = session_id)
 
 
 @app.route('/edit_results/<results_id>')
@@ -68,6 +76,7 @@ def edit_results(results_id):
         return render_template('issue.html',
                                     issue="session_id",
                                     session_id=results_id)
+
 
 @app.route('/delete_item/<input_id>/<item>')
 def delete_item(input_id, item):
@@ -84,14 +93,13 @@ def delete_results(input_id):
 
 
 @app.route('/consultdb', methods=['GET', 'POST'])
-@app.route('/edit_results/consultdb', methods=['GET', 'POST'])
 def consultdb():
     if request.method == 'POST':
         try:
             session_id = request.form["session_id"]
             the_input = inputs.find_one({'_id': ObjectId(session_id)})
             the_input_id = the_input["_id"]
-            return render_template('display_result.html', results=the_input, the_input_id=the_input_id)
+            return redirect(url_for('display_results', session_id = session_id))
         except:
             return render_template('issue.html',
                                     issue="session_id",

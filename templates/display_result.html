@@ -261,13 +261,16 @@
                 <i class="material-icons">sentiment_very_satisfied</i><br>
                 Did you like this?
             </p>
-
+            <p>You can share your results with this link:<br>
+                <input id="sharable-link" type="text-area" rows="1" cols="30">
+                <button onclick="copyLink()" class="light sharable-btn">Copy link</button>
+            </p>
 
             <div class="row">
                 <div class="col-12">
                     <a href="{{ url_for('home') }}">
                         <button class="btn-large dark">
-                            Create a new story
+                            Check a new chat
                         </button>
                     </a>
 
@@ -287,6 +290,11 @@
 
 
 <script>
+    // Getting Sharable link
+    let textArea = document.getElementById("sharable-link");
+    textArea.value = window.location.href;
+
+    // Generating charts
     if ("{{results.word_1_result}}" != "") {
         let word1Chart = chartData("word-1", "{{results.word_1_result}}",
             "monthly use of this word", 'times this word appeared', '#075E54');

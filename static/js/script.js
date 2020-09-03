@@ -5,3 +5,13 @@ function showLoading(){
         loadingDiv.classList.add('loading-show');
     }
 }
+
+
+function copyLink(){
+    let textArea = document.getElementById("sharable-link");
+    textArea.value = window.location.href;
+    textArea.focus();
+    textArea.select();
+    document.execCommand("Copy");
+    textArea.value = "Copied!";
+}
