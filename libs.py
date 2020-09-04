@@ -14,7 +14,6 @@ def get_data_from_whats(file_content):
     Runs several funcions on the file content and returns
     a dictionary with data about the chat.
     """
-
     prefixes = get_prefixes(file_content)
     period = get_period(prefixes)
     messages = get_messages(file_content)
@@ -164,6 +163,15 @@ media = [
     "arquivo de mídia oculto",
     "áudio ocultado",
 ]
+
+def process_ignored_words(ignored):
+    """
+    """
+    user_ignored = re.findall(r'\w+', ignored)
+    if len(user_ignored) > 0:
+        for word in user_ignored:
+            ignored_words.append(word.lower())
+    return user_ignored
 
 
 def get_prefixes(messages):

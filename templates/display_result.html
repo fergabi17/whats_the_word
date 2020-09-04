@@ -151,6 +151,13 @@
                 {% endif %}
                 {% endfor %}
             </p>
+            <hr>
+            <i class="tiny material-icons">arrow_drop_down</i>
+            <p class="tiny-text">
+                
+                You can exclude any of those words to get a more meaningful result!<br>
+                Simply add them to the WORDS TO BE IGNORED field and <a href="{{ url_for('home') }}">make a new search!</a>
+            </p>
             {% endif %}
         </div>
     </div>
@@ -215,7 +222,7 @@
     <div class="row result light">
         <div class="col-12">
             <p>
-                <span><i class="material-icons result-icons">sort</i></span><br>
+                <span><i class="material-icons result-icons">insert_chart</i></span><br>
                 To finish this story, we counted how many <span>characters</span> each message had.<br>
                 Then, all those numbers were grouped according to their <span>leading digit</span>.
                 {% if results.benford != "" %}

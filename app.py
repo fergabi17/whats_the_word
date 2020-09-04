@@ -45,7 +45,14 @@ def getfile():
     if request.method == 'POST':
         try:
             file = request.files['myfile']
+            user_ignored = request.form['ignored']
+            
+            if len(user_ignored) > 0:
+                user_ignored = { "user_ignored": libs.process_ignored_words(user_ignored)}
+                mongo.db.user_ignored.insert_one(user_ignored)
+            
             file_content = file.read().decode()
+
             results = libs.get_data_from_whats(file_content.lower())
             this_insert = inputs.insert_one(results)
             return redirect(url_for('display_results', session_id=results['_id']))

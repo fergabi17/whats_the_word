@@ -1,40 +1,48 @@
 {%extends 'base.html'%}
 {%block content%}
 <div class="col-12">
-    <p class="main-text">Find out the words<br class="d-block d-sm-none"> that appear the&nbsp;most <br>on your WhatsApp&nbsp;chat!<br>
-        <span class="tiny-text">Don’t worry, we don’t keep any data you don’t want us to keep =)</span></p>
+    <p class="main-text">Find out the words<br class="d-block d-sm-none"> that appear the&nbsp;most <br>on your
+        WhatsApp&nbsp;chat!</p>
 
-    <!-- ********************************************************* FLASH MESSAGES -->   
-    {% with messages = get_flashed_messages() %} 
-        {% if messages %}
-            {% for message in messages %}
-            <p class="flashed">{{ message }}</p>
-            {% endfor %}
-        {% endif %} 
+
+    <!-- ********************************************************* FLASH MESSAGES -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <p class="flashed">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
     {% endwith %}
 
-    <p class="spacious-p">
-        <i class="material-icons">file_upload</i>
-        <span class="load-p">Load a WhatsApp chat: </span>
-    </p>
-    <form action="getfile" method="POST" enctype="multipart/form-data">
+    <div class="form-area">
+        <p class="spacious-p">
 
-        <div class="file-input-wrapper">
-            <p>
-                <input type="file" name="myfile" class="file-input">
-            </p>
-        </div>
-<!-- ********************************************************* LOADING -->
-        <div id="loading" class="loading-hidden">
-        </div>
-        
-<!-- ********************************************************* SUBMIT -->
-        <p>
-            <a><input class="btn-large dark" type="submit" value="Check this chat!" onclick="showLoading()"></a>
+            <span class="load-p">Load a .txt file with a WhatsApp chat: </span>
         </p>
+        <form action="getfile" method="POST" enctype="multipart/form-data">
 
-    </form>
-   
+            <div class="file-input-wrapper">
+                <p>
+                    <input type="file" name="myfile" class="file-input">
+                </p>
+            </div>
+            <!-- ********************************************************* USER IGNORED WORDS -->
+            <p class="ignored-words">
+                WORDS TO BE IGNORED:
+                <input type="text" id="ignored" name="ignored" placeholder="like this: hello, more, morning">
+            </p>
+            <!-- ********************************************************* LOADING -->
+            <div id="loading" class="loading-hidden">
+            </div>
+
+            <!-- ********************************************************* SUBMIT -->
+            <p>
+                <a><input class="btn-large dark" type="submit" value="Check this chat!" onclick="showLoading()"></a>
+            </p>
+
+        </form>
+    </div>
+    <p><span class="tiny-text">Don’t worry, we don’t keep any data you don’t want us to keep =)</span></p>
 </div>
 
 <!-- ********************************************************* CONSULT -->
