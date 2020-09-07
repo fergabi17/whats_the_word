@@ -3,6 +3,7 @@ import json
 import pymongo
 import math
 from collections import Counter
+from bson.objectid import ObjectId
 
 import benford_law
 
@@ -200,7 +201,6 @@ def get_participants(prefixes):
         name = get_participant_name(prefix)
         participants_names.append(name)
     return Counter(participants_names).most_common()
-    #return Counter(participants_names)
 
 
 def get_participant_name(prefix):
@@ -362,7 +362,7 @@ def get_messages(file_content):
 def get_links(messages):
     """
     @messages: array
-    @returns: Counter object
+    @returns: array
     Counts all links sent by every chat participant
     """
     links_pattern = r'http.+[/s$]'
@@ -372,13 +372,13 @@ def get_links(messages):
         if (len(links) > 0):
             link_sender = get_participant_name(message)
             links_messages.append(link_sender)
-    return Counter(links_messages)
+    return Counter(links_messages).most_common()
 
 
 def get_media(messages):
     """
     @messages: array
-    @returns: counter object
+    @returns: array
     Counts all media sent by every chat participant
     """
     media_messages = []
@@ -388,7 +388,7 @@ def get_media(messages):
             if (len(medias) > 0):
                 media_sender = get_participant_name(message)
                 media_messages.append(media_sender)
-    return Counter(media_messages)
+    return Counter(media_messages).most_common()
 
 
 def get_word_combinations(messages_body):
@@ -461,6 +461,4 @@ def get_global_benford(inputs):
         global_benford[digit] = math.floor(global_benford[digit] * 100 / inputs.count())
     
     return global_benford 
-
-
 

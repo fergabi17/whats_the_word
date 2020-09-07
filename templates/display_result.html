@@ -22,20 +22,42 @@
                 {% endfor%}
 
             </p>
+            <!-- ******************************************** PERIOD -->
             <p>
                 They have sent <span class="highlight">{{results.messages}}</span> <span>messages</span>
                 {% if results.period_length != "" %}
-                    in 
-                    {% if results.period_length != 0 %}
-                        <span>{{results.period_length}} month(s)</span><br>
-                    {% else %}
-                        <span>less than a month</span><br>
-                    {% endif %}
+                in
+                {% if results.period_length != 0 %}
+                <span>{{results.period_length}} month(s)</span><br>
+                {% else %}
+                <span>less than a month</span><br>
+                {% endif %}
                 {% endif %}
                 {% if results.period | length %}
                 from <span>{{results.period[0]}} to {{results.period[1]}}</span>
                 {% endif %}
             </p>
+
+            <!-- ******************************************** EDIT PARTICIPANTS -->
+            {% if results.participants != "" %}
+            <hr>
+            <i class="tiny material-icons">arrow_drop_down</i>
+            <p class="tiny-text">
+                <button onclick="showEdit()" class="edit-names" id="show-edit">Update names</button>
+            </p>
+            <!-- ******************************************** EDIT TOGGLE -->
+            <div id="edit_participants" class="edit-hide">
+                <form action="edit_participants/{{results['_id']}}" method="POST">
+                    <p>
+                        {% for participant in results.participants %}
+                        <input type="text" value="{{participant[0].title()}}" class="participants" name="{{participant}}">
+                        {% endfor %}
+                        <input type="submit" class="btn-small green" value="Change">
+                    </p>
+                </form>
+            </div>
+            {% endif %}
+
         </div>
     </div>
 
@@ -45,7 +67,7 @@
             {% if results.links | length %}
             <p>During this time, they have shared some <span class="dark-highlight">Links</span>! Take a look:<br>
                 {% for person in results.links %}
-                <span>{{person.title()}}</span> shared <span>{{results.links[person]}} </span><br>
+                <span>{{person[0].title()}}</span> shared <span>{{person[1]}} </span><br>
                 {% endfor%}
             </p>
             {% endif %}
@@ -58,7 +80,7 @@
             {% if results.media | length %}
             <p>And they also shared <span class="dark-highlight">media</span>: <br>
                 {% for person in results.media %}
-                <span>{{person.title()}}</span> shared <span>{{results.media[person]}} </span><br>
+                <span>{{person[0].title()}}</span> shared <span>{{person[1]}} </span><br>
                 {% endfor%}
                 media files
             </p>
@@ -154,9 +176,10 @@
             <hr>
             <i class="tiny material-icons">arrow_drop_down</i>
             <p class="tiny-text">
-                
+
                 You can exclude any of those words to get a more meaningful result!<br>
-                Simply add them to the WORDS TO BE IGNORED field and <a href="{{ url_for('home') }}">make a new search!</a>
+                Simply add them to the WORDS TO BE IGNORED field and <a href="{{ url_for('home') }}">make a new
+                    search!</a>
             </p>
             {% endif %}
         </div>

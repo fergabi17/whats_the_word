@@ -15,3 +15,20 @@ function copyLink(){
     document.execCommand("Copy");
     textArea.value = "Copied!";
 }
+
+
+function showEdit(){
+    let editDiv = document.querySelector("#edit_participants");
+    let showBtn = document.querySelector("#show-edit");
+    if(editDiv.classList.contains('edit-hide')){
+        editDiv.classList.remove('edit-hide');
+        editDiv.classList.add('edit-show');
+        showBtn.innerHTML = "Hide"
+
+    } else {
+        editDiv.classList.remove('edit-show');
+        editDiv.classList.add('edit-hide');
+        showBtn.innerHTML = "Update Names"
+    }
+
+}
