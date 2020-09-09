@@ -65,11 +65,11 @@ Find Here the wire frames for the information architecture:
 
 Website main colors:
 
-![Colors](resources/UX/colours.png)
+- ![Colors](resources/UX/colours.png)
 
 Website fonts:
-![Do Hyeon](resources/UX/font-doHyeon.png)
-![Nanum Gothic](resources/UX/font-NanumGothic.png)
+- ![Do Hyeon](resources/UX/font-doHyeon.png)
+- ![Nanum Gothic](resources/UX/font-NanumGothic.png)
 
 
 
