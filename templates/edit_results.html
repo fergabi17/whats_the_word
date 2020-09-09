@@ -62,15 +62,15 @@
 
 
             <!-- **************************************** EDIT PARTICIPANTS -->
-            
+
             {% if item == "participants" %}
             <div id="edit_participants" class="edit-hide">
-                    <form action="edit_participants/{{input['_id']}}" method="POST">
-                        {% for participant in input[item] %}
-                        <input type="text" value="{{participant[0].title()}}" class="participants" name="{{participant}}">
-                        {% endfor %}
-                        <input type="submit" class="btn-small green" value="Change">
-                    </form>
+                <form action="edit_participants/{{input['_id']}}" method="POST">
+                    {% for participant in input[item] %}
+                    <input type="text" value="{{participant[0].title()}}" class="participants" name="{{participant}}">
+                    {% endfor %}
+                    <input type="submit" class="btn-small green" value="Change">
+                </form>
             </div>
             {% endif %}
 
@@ -106,25 +106,23 @@
         <!-- ********************************************************* CONSULT -->
         <div class="col-12 col-sm-6">
             <p>
-
                 <i class="material-icons">reply</i><br>
-                <a href="{{ url_for('display_results', session_id = input._id) }}">
-                    <button class="btn-large dark">
+                <button class="btn-large dark">
+                    <a href="{{ url_for('display_results', session_id = input._id) }}">
                         Back to my results
-                    </button>
-                </a>
-
+                    </a>
+                </button>
             </p>
         </div>
         <!-- ********************************************************* GLOBAL RESULTS -->
         <div class="col-12 col-sm-6">
             <p>
                 <i class="material-icons">sentiment_very_satisfied</i><br>
-                <a href="{{ url_for('global_words') }}">
-                    <button class="btn-large dark">
+                <button class="btn-large dark">
+                    <a href="{{ url_for('global_words') }}">
                         Allow this data to be part of the global results!
-                    </button>
-                </a>
+                    </a>
+                </button>
             </p>
         </div>
     </div>

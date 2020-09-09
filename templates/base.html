@@ -30,15 +30,21 @@
                 <nav>
                     <div>
                         <ul class="nav">
-                            <a href="{{ url_for('home') }}">
-                                <li>Home</li>
-                            </a>
-                            <a href="{{ url_for('how_to_use') }}">
-                                <li>How to use</li>
-                            </a>
-                            <a href="{{ url_for('global_words') }}">
-                                <li>Global Words</li>
-                            </a>
+                            <li>
+                                <a href="{{ url_for('home') }}">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('how_to_use') }}">
+                                    How to use
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('global_words') }}">
+                                    Global Words
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
@@ -49,7 +55,7 @@
         <div class="row text-center">
             <div class="col-12 logo">
             </div>
-        <!-- ********************************************************* CONTENT -->
+            <!-- ********************************************************* CONTENT -->
             {% block content %}
             {% endblock %}
         </div>

@@ -50,7 +50,8 @@
                 <form action="edit_participants/{{results['_id']}}" method="POST">
                     <p>
                         {% for participant in results.participants %}
-                        <input type="text" value="{{participant[0].title()}}" class="participants" name="{{participant}}">
+                        <input type="text" value="{{participant[0].title()}}" class="participants"
+                            name="{{participant}}">
                         {% endfor %}
                         <input type="submit" class="btn-small green" value="Change">
                     </p>
@@ -298,24 +299,28 @@
 
             <div class="row">
                 <div class="col-12">
-                    <a href="{{ url_for('home') }}">
-                        <button class="btn-large dark">
-                            Check a new chat
-                        </button>
-                    </a>
 
-                    <a href="{{ url_for('global_words') }}">
-                        <button class="btn-large dark">
+                    <button class="btn-large dark">
+                        <a href="{{ url_for('home') }}">
+                            Check a new chat
+                        </a>
+                    </button>
+
+
+
+                    <button class="btn-large dark">
+                        <a href="{{ url_for('global_words') }}">
                             See global results
-                        </button>
-                    </a>
+                        </a>
+                    </button>
+
                 </div>
             </div>
 
         </div>
 
     </div>
-    
+
 </div>
 
 
