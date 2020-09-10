@@ -329,7 +329,7 @@ def get_word_info(word, messages):
 
 def get_monthly_frequency(word_info):
     """
-    @word_dates: array of tuples
+    @word_info: array of tuples
     @returns: dict
     Creates a dictionary with the frequency a word was used each month.
     """

@@ -123,7 +123,7 @@ User Stories:
 - [MongoDB](https://account.mongodb.com/)
     - Used to store the website's database
 
-- [BOOTSTRAP](https://getbootstrap.com)
+- [Bootstrap](https://getbootstrap.com)
     - The project uses the grid system from BOOTSTRAP to get the website responsive.
 
 - [Regex Tester](https://regex101.com/)
@@ -132,17 +132,17 @@ User Stories:
 - [Google fonts](https://fonts.google.com/)
     - Used as a source for all fonts
     
-- [Google Chrome](https://www.schemecolor.com/)
+- [Scheme Colour](https://www.schemecolor.com/)
     - To generate the green colour scheme 
 
 - [Google Chrome](https://www.google.com/chrome/)
     - This project used google CHROME browser and its developer tools.
 
 - [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new)
-    - This project used MOZILLA FIREFOX browser.
+    - This project used MOZILLA FIREFOX browser for testing
 
 - [Safari](https://www.apple.com/safari/)
-    - This project used SAFARI browser.
+    - This project used SAFARI browser for testing
 
 - [Visual Studio Code](https://code.visualstudio.com/)
     - This project was built using Visual Studio Code IDE.
@@ -165,16 +165,114 @@ User Stories:
 
 ## Testing
 
-For manual tests, the following browsers were used:
+You can find a text file that can be used to test this app on resources/Test_file
+
+### Input types
+
+As the input is a text file, regular expressions are used to first go through the data. To split the text file in messages, it is necessary to find the beginning of each message. This is made creating a pattern that could match the date, time and name on the beginning of each message - what I call prefix. 
+
+Each phone type can export a slightly different prefix in a text message. The first tests consisted in testing inputs extracted from different phones, trying to find all the variations. The examples bellow can illustrate some cases:
+- 07/07/2019, 17:37 - Participant's name:
+- ‎[19/07/2020 19:46:25] Participant's name:
+- [13/04/2019, 17:46:57] Participant's name:
+
+A pattern was created to match them all and tested on [Regex Tester](https://regex101.com/).
+
+### Popular words
+
+With the prefixes found, they could be excluded from the search for popular words. If this isn't done,names from the prefix would always appear in the results. 
+
+When first testing the most popular words from the chat, some issues started to appear:
+
+- Media
+If there was a fair amount of media sent, the media type would be the one popping up on top of the results. Even though this isn't actually a word typed by the user, it's still a very interesting information to extract. From here, a list with the possible words representing the types of media was created. This list was ignored when searching for popular words, but used to count all the media sent.
+
+- Language
+When testing media types strings to be excluded, the language used became important. To search for media in a chat exported in English is different than in a chat in Portuguese or French. At this point, some tests were done with inputs generated in English and in Portuguese. Some examples bellow:
+-- "file omitted"
+-- "image attached"
+-- "imagem ocultada"
+-- "vídeo anexado"
+
+- Meaningless popular words
+According to the tests made on both languages, when a search for common words is made, the probability of articles, prepositions and pronouns to appear first is huge. But those words don't seem to bring a lot of meaning to a result, since they appear in basically all chats. From this, a list with main ignored words was created. Also in English and Portuguese, this list includes words that are excluded from the result.
+
+Unfortunately this won't cover all cases that can appear on a user's input. But from this point, the necessity of a field where the user could add their own words to be ignored became evident.
+
+### Longest word
+
+The longest word was an easy functionality to be created. But with the results from the tests, a couple of issues were raised:
+
+- Links
+If we consider a long word the same thing as a sequence of word characters, the result can bring up parts of what was actually a link, and not really a word. For this search to be effective, first it was needed to exclude all links from the body of the messages. Just like for media types, a pattern was created to match and exclude all links from the search of popular and long words. As it is still an interesting information to have, the quantity of links has its own search and it's part of the user's results.
+
+- Overflow hidden
+When testing how to spot the longest word, a very, very long word could appear. Sometimes it was not even a word, but someone laughing like "hahahahahha" repeated so many times that it would be impossible to fit this word on a screen. When testing the possible outcomes for the longest word result, it was very clear that all the div elements that presented user's input should be styled as overflow:hidden.
+
+### The monthly use of a word
+After gathering information about the most popular words, it came to my mind it would be also be very interesting to see how was the use of this word along time. Has its frequency decreased or increased? To get this information, it was necessary to find out how many times the popular word was said each month. 
+
+After getting this information, in its test phase I realized the numbers were different than expected. Adding the monthly numbers was resulting on a different value than total appearances of that same word on the chat. After a couple o print() statements followed by comparison with the original text file, I found out two issues were causing this:
+
+- Line breaks inside a message
+At this point, the parameters used to match a message were:
+-- the prefix would mark the beginning 
+-- A line-break/new paragraph would mark the end
+In this scenario, anything that appeared after a line break on a message wouldn't be considered as part of the message. So, if the word we were looking for was typed after a line break, it wasn't counted on the monthly result. To solve this, before creating an array with all the messages, the line breaks in the middle of a message had to be cleaned. After this, I was sure all the line breaks that were still there were could be used as a message separator.
+
+- The word appeared more than once in a message
+As initially the function to spot a word in a message would only return true or false, if a word was typed more than once in the same message they would be only counted as one. To avoid this, the function was re-written to add 1 to the date counter each time the word was found inside that message. 
+
+- Popular word was also inside a prefix
+For the popular words result, the search is done in a long string containing all the messages without their prefixes. For the monthly frequency, the prefixes were needed to find out the date of the message and who said it. But when the popular word was also inside the prefix, the counter would have a different result. To fix this issue, the counter would be decreased of 1 if the popular word could also be spotted in the prefix.
+
+### Popular Word Combinations
+The idea behind spotting the most used word combinations was mainly to know what were the most popular phrases. As it became very difficult to narrow down the start and end point of what would be a phrase, I tried to make it easier. Bringing this idea to a more simplistic execution, I decided to show the 3 words that most appeared together in a chat. Even if the output represents only part of a sentence, the 3 words together were enough to represent that phrase's meaning.
+
+The idea was good, but I faced the same issue as with popular words: I had a certain number of how many times that sentence was said, but when comparing with the monthly use of this sentence the numbers wouldn't match. This part involved a lot of tests to compare the numbers in the output with the numbers I would manually extract from the text file. I could finally understand what was happening with a particular chat that had the phrase "this is america" repeated about 4000 times. The text file would show me something like this:
+
+message 1: oooooh this is america
+
+message 2:
+this is america
+this is america
+this is america
+this is america
+
+
+With this example I realized that grouping words 3 by 3 wouldn't always work as planned. Instead of having "this is america" 5 times from this input, I ended up with groups like this:
+
+oooooh this is
+this is america
+this is america
+this is america
+this is america
+
+This means the result will appear as 4 "this is america" when grouping words 3 by 3. But, if we make a search on the text to find this specific phrase, the real result will be 5. I understood this wasn't an issue, only that I had misinterpreted the output when grouping words this way. 
+
+
+### Sharable results link
+
+When testing the webapp with some real users, the necessity of creating a sharable link was brought to my attention. So far, the page that presented the user's result didn't contain that session's id from the database, it would just render a template with the information given. So, sharing that link, would only redirect the user to the index page. Noticing this, I changed the routing function on flask: every time the results were presented to the user (editing, consulting or getting results from the database), they had to pass by a display_results(session_id) function. This way I was sure that the url displayed was sharable.
+
+
+### Updating participant's names
+
+When a result from a chat was generated, it names the chat participants after the prefixes found. If a certain number wasn't registered on the phone's agenda, this name would become only a number. Presenting results with phone numbers instead of names doesn't seem very interesting. In here it was clear a feature to edit participants' names was needed.
+
+
+### Website usability
+
+To test how the website would be presented to the user, the following browsers were used:
 - Google chrome (desktop and mobile)
 - Safari (desktop and mobile)
 - Mozilla Firefox
 
-Manual tests included: 
+![1](resources/UX/site-architecture.png)
+
+During these manual tests, the main functionalities that were tested can be listed here:
 - Functional links
 - Links to other websites open on a new tab
-- Editing names will edit them in all results that include names
-- The total number of appearances of a word matches its frequency on the chart
 - Navigating back and forth doesn't break paths
 - Information easily found
 - Readability
@@ -183,7 +281,7 @@ The CSS and the HTML codes were validated on jigsaw.w3.org and validator.w3.org.
 
 ## Deployment
 
-This project is hosted on [GitHub](https://github.com/fergabi17/whats_the_word) and on [Heroku](http://fergabi17-whats-the-word.herokuapp.com/)
+This project is hosted on [GitHub](https://github.com/fergabi17/whats_the_word) and on [Heroku](http://fergabi17-whats-the-word.herokuapp.com/) and the database is hosted on mongoDB.
 
 The git repository contains:
  - README file
@@ -202,27 +300,53 @@ The git repository contains:
     - UX: website's visual identity elements
     - wireframes: website's wireframes created during the structure plan
  
-To deploy your own version of the web app:
+To have your own version of this app you need to:
+- Set your own database and collection on mongoDB:
+    -- Create an account on https://cloud.mongodb.com/
+    -- Create a cluster using the closest region to you 
+    -- You can set a free tier for the purposes of this project
+    -- Create a username and password to access the database (Do not use any non-alphanumeric characters in your username or password)
+    -- Create a new database for this project
+    -- Create 2 collections: inputs and user_ignored
 - Have git installed
 - Visit the [repository]([GitHub](https://github.com/fergabi17/whats_the_word))
 - Open your chosen IDE (Cloud9, VS Code, etc.)
 - Open a terminal in your root directory
 - Type 'git clone ' followed by the code taken from github repository
-    - ```git clone https://github.com/fergabi17/whats_the_word/```
-- Install python requirements: pip3 install -r requirements. txt
+    -- ```git clone https://github.com/fergabi17/whats_the_word/```
+- Install python requirements: ```pip3 install -r requirements.txt```
 - Create a env.py file to store variables related to the database you'll use:
-"SECRET_KEY", "MONGO_DBNAME", "MONGO_URI"
+    -- "SECRET_KEY" to use flask flashed messages
+    -- "MONGO_DBNAME", "MONGO_URI": you can copy the address from your mongoDB account, click on the "connect" button from your cluster
 - Set your flask env as development on the terminal: export FLASK_ENV=development
-- Enter: python3 -m flask run
-- When this completes you have your own version of the website
+- To view locally, enter: ```python3 -m flask run```
+- You can modify and push your modifications to your github page: 
+    -- ```git add <modified_files>```
+    -- ```git commit -m"your message"```
+    -- ```git push master```
 
-This website was developed in Visual Studio Code.
+
+To deploy your version of this webapp:
+- Create an account on [Heroku](https://dashboard.heroku.com/)
+- Create a new app
+- In the 'Deploy' tab, connect you app to your github project page
+- On your settings, add the following config vars:
+    -- IP
+    -- PORT
+    -- MONGO_DBNAME
+    -- MONGO_URI
+    -- SECRET_KEY
+- Download and install heroku CLI ```brew tap heroku/brew && brew install heroku```
+- Connect to heroku ```heroku login```
+- Push your modifications to heroku ```git push heroku master```
+- Launch your app ```heroku ps:scale web=1```
+- When this completes you have a remote version of the webapp.
 
 ## Credits
 
 ### Acknowledgements
 
-Websites consulted during the project developement. Those websites were used for reseach in the slot machine subject and functionality, as well as for coding references:
+Websites consulted during the project development. Those websites were used for research on how to build the webapp, as well as for coding references:
 - [CSS-tricks](https://css-tricks.com/)
 - [W3schools](https://www.w3schools.com/)
 - [StackOverflow](https://stackoverflow.com/)
@@ -231,7 +355,7 @@ Websites consulted during the project developement. Those websites were used for
 - [WhatsApp](https://faq.whatsapp.com/android/chats/how-to-save-your-chat-history/?lang=en)
 
 
-Thank you for mentoring and suport:
+Thank you for mentoring and support:
  - The Code institute
- - Antonija Simic and Dick Vlaanderen for our mentoring sections
+ - Antonija Simic and Dick Vlaanderen for our mentoring sessions
  - Guilherme Vieira for all the patience in testing

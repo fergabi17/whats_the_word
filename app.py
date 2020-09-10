@@ -139,11 +139,6 @@ def edit_participants(input_id):
                             {"$set": {
                                 "longest_word_dates": longest_dates,
                             }})
-                        print("updated")
-                        print(longest_dates)
-                    else:
-                        print(longest_dates)
-                        print(participant)
 
                     # Participant Name
                     new_participant = [participant_to_change, participant[1]]

@@ -69,6 +69,7 @@ button:focus {
     padding: 0;
     letter-spacing: 1px;
     text-align: center;
+
 }
 
 .nav a {
@@ -90,9 +91,9 @@ button:focus {
 
 /* ---------- Nav for phones */
 @media only screen and (max-width: 767px) {
-    .nav li {
-        padding: 10px;
-    }
+    .nav a {
+    padding: 10px;
+}
 }
 
 /* ------------------------------------------ Headings */
