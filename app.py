@@ -17,7 +17,7 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
 mongo = PyMongo(app)
-inputs = mongo.db.inputs
+inputs = mongo.db.test_inputs
 
 
 @app.route('/')
@@ -44,23 +44,23 @@ def global_words():
 @app.route('/getfile', methods=['GET', 'POST'])
 def getfile():
     if request.method == 'POST':
-        #try:
-        file = request.files['myfile']
-        user_ignored = request.form['ignored']
+        try:
+            file = request.files['myfile']
+            user_ignored = request.form['ignored']
 
-        if len(user_ignored) > 0:
-            user_ignored = {
-                "user_ignored": libs.process_ignored_words(user_ignored)
-            }
-            mongo.db.user_ignored.insert_one(user_ignored)
+            if len(user_ignored) > 0:
+                user_ignored = {
+                    "user_ignored": libs.process_ignored_words(user_ignored)
+                }
+                mongo.db.user_ignored.insert_one(user_ignored)
 
-        file_content = file.read().decode()
+            file_content = file.read().decode()
 
-        results = libs.get_data_from_whats(file_content.lower())
-        this_insert = inputs.insert_one(results)
-        return redirect(url_for('display_results', session_id=results['_id']))
-        #except:
-        return render_template('issue.html', issue="input")
+            results = libs.get_data_from_whats(file_content.lower())
+            this_insert = inputs.insert_one(results)
+            return redirect(url_for('display_results', session_id=results['_id']))
+        except:
+            return render_template('issue.html', issue="input")
     return redirect(url_for('home'))
 
 

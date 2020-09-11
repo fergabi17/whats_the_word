@@ -17,7 +17,10 @@ def apply_benford(messages, media):
     characters = get_chars_in_messages(clean_messages)
     grouped = group_numbers(characters)
     for number in grouped:
-        benford[number] = round(grouped[number] / len(characters), 2)
+        try:
+            benford[number] = round(grouped[number] / len(characters), 2)
+        except:
+            benford[number] = 0
     return benford
 
 
@@ -32,9 +35,9 @@ def get_clean_messages(messages, media):
     links_pattern = r'http.+[/s$]'
     clean_messages = []
     for message in messages:
-        find_prefix = re.findall(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:', message)
+        find_prefix = re.findall(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s.*\d{2}\:\d{2}\:?.+?\:', message)
         if len(find_prefix) > 0:
-            message = re.sub(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:\s?', '', message)
+            message = re.sub(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s.*\d{2}\:\d{2}\:?.+?\:\s?', '', message)
             for item in media:
                 message = re.sub(fr'[\<\(]?\b{item}\b[\>\)]?', '', message)
             if len(message) > 0:

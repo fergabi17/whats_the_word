@@ -29,9 +29,15 @@ def get_data_from_whats(file_content):
     word_3_dates = get_word_info(popular_words[2][0], messages)
     
     word_seq_1_dates = get_word_info(word_combinations[0][0], messages)
-    word_seq_2_dates = get_word_info(word_combinations[1][0], messages)
-    word_seq_3_dates = get_word_info(word_combinations[2][0], messages)
-    
+    try:
+        word_seq_2_dates = get_word_info(word_combinations[1][0], messages)
+    except:
+        word_seq_2_dates = ("", 0)
+    try:
+        word_seq_3_dates = get_word_info(word_combinations[2][0], messages)
+    except:
+        word_seq_3_dates = ("", 0)
+        
     words_result = {
         "messages": len(prefixes),
         "participants": get_participants(prefixes),
@@ -193,6 +199,11 @@ media = [
 
 def process_ignored_words(ignored):
     """
+    @ignored string
+    @returns array
+    Finds the ignored words from the user's input,
+    add them to the ignored_words list and returns
+    an array with the user ignored words
     """
     user_ignored = re.findall(r'\w+', ignored)
     if len(user_ignored) > 0:
@@ -209,7 +220,8 @@ def get_prefixes(messages):
     07/07/2019, 18:34 - Participant Name:
     Returns an array with all entries
     """
-    prefixes = re.findall(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:',
+
+    prefixes = re.findall(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s.*\d{2}\:\d{2}\:?.+?\:',
                           messages)
 
     return prefixes
@@ -223,10 +235,13 @@ def get_participants(prefixes):
     Returns a list with all names, skipping duplicates.
     """
     participants_names = []
-    for prefix in prefixes:
-        name = get_participant_name(prefix)
-        participants_names.append(name)
-    return Counter(participants_names).most_common()
+    try:
+        for prefix in prefixes:
+            name = get_participant_name(prefix)
+            participants_names.append(name)
+        return Counter(participants_names).most_common()
+    except:
+        return [("",0)]
 
 
 def get_participant_name(prefix):
@@ -236,8 +251,11 @@ def get_participant_name(prefix):
     It extracts the name of a participant
     from a string containing a prefix.
     """
-    name = re.findall(r'[\-\]]\s.+?\:', prefix)
-    return re.sub(r'^[\]-]\s', '', name[0]).replace(':', '')
+    try:
+        name = re.findall(r'[\-\]]\s.+?\:', prefix)
+        return re.sub(r'^[\]-]\s', '', name[0]).replace(':', '')
+    except:
+        return ""
 
 
 def get_date(prefix):
@@ -258,9 +276,12 @@ def get_period(prefixes):
     @returns: tuple
     Returns the start and the end date of messages in the file
     """
-    start_date = get_date(prefixes[0])
-    end_date = get_date(prefixes[len(prefixes) - 1])
-    return (start_date, end_date)
+    try:
+        start_date = get_date(prefixes[0])
+        end_date = get_date(prefixes[len(prefixes) - 1])
+        return (start_date, end_date)
+    except:
+        return ("","")
 
 
 def get_period_length(period):
@@ -269,11 +290,14 @@ def get_period_length(period):
     @returns: int
     Extracts the number of months in a given period
     """
-    end_date = {"year": int(period[1][6:10]), "month": int(period[1][3:5])}
-    start_date = {"year": int(period[0][6:10]), "month": int(period[0][3:5])}
+    try:
+        end_date = {"year": int(period[1][6:10]), "month": int(period[1][3:5])}
+        start_date = {"year": int(period[0][6:10]), "month": int(period[0][3:5])}
 
-    return (end_date["year"] - start_date["year"]) * 12 + (end_date["month"] -
-                                                           start_date["month"])
+        return (end_date["year"] - start_date["year"]) * 12 + (end_date["month"] -
+                                                            start_date["month"])
+    except:
+        return 0
 
 
 def get_messages_body(messages):
@@ -285,7 +309,7 @@ def get_messages_body(messages):
     """
     messages_body = ""
     for message in messages:
-        new_message = re.sub(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:', '\n',
+        new_message = re.sub(r'\[?\d{2}\/\d{2}\/\d{4}\,?\s.*\d{2}\:\d{2}\:?.+?\:', '\n',
                             message)
         messages_body = messages_body + new_message
         
@@ -330,27 +354,30 @@ def get_word_info(word, messages):
     @returns: array of tuples
     Gets the date and the participant that said the word in the messages.
     """
-    word_info = []
-    messages_with_word = []
-    
-    for message in messages:
-        word_in_message = re.findall(rf'\b{word}\b', message)
-        if len(word_in_message ) > 0:
-            for word_appearance in word_in_message:
-                messages_with_word.append(message)
+    try:
+        word_info = []
+        messages_with_word = []
+        
+        for message in messages:
+            word_in_message = re.findall(rf'\b{word}\b', message)
+            if len(word_in_message ) > 0:
+                for word_appearance in word_in_message:
+                    messages_with_word.append(message)
+                    
+                # if word in prefix desconsider
+                word_in_prefix = get_prefixes(message)
+                words_found_in_prefix = re.findall(rf'\b{word}\b', word_in_prefix[0])
+                if len(words_found_in_prefix) > 0: 
+                    for word in words_found_in_prefix:
+                        del messages_with_word[-1]
                 
-            # if word in prefix desconsider
-            word_in_prefix = get_prefixes(message)
-            words_found_in_prefix = re.findall(rf'\b{word}\b', word_in_prefix[0])
-            if len(words_found_in_prefix) > 0: 
-                for word in words_found_in_prefix:
-                    del messages_with_word[-1]
-            
 
-    for message in messages_with_word:
-        word_info.append((get_date(message), get_participant_name(message)))
+        for message in messages_with_word:
+            word_info.append((get_date(message), get_participant_name(message)))
 
-    return word_info
+        return word_info
+    except:
+        return [("",0)]
 
 
 def get_monthly_frequency(word_info):
@@ -359,16 +386,19 @@ def get_monthly_frequency(word_info):
     @returns: dict
     Creates a dictionary with the frequency a word was used each month.
     """
-    date_string = r'\d\d\/\d\d\d\d$'
-    result = {}
+    try:
+        date_string = r'\d\d\/\d\d\d\d$'
+        result = {}
 
-    for info in word_info:
-        current_date = re.findall(date_string, info[0])[0]
-        if current_date in result:
-            result[current_date] = result[current_date] + 1
-        else:
-            result[current_date] = 1
-    return result
+        for info in word_info:
+            current_date = re.findall(date_string, info[0])[0]
+            if current_date in result:
+                result[current_date] = result[current_date] + 1
+            else:
+                result[current_date] = 1
+        return result
+    except:
+        return {"no date": 0}
 
 
 def get_messages(file_content):
@@ -381,7 +411,7 @@ def get_messages(file_content):
     clean_messages = re.sub(r'[\n\r](?!(\[?\d\d\/\d\d\/\d\d\d\d|\u200e))', ' ',
                             file_content)
 
-    return re.findall(r'\d{2}\/\d{2}\/\d{4}\,?\s\d{2}\:\d{2}\:?.+?\:.+',
+    return re.findall(r'\d{2}\/\d{2}\/\d{4}\,?\s.*\d{2}\:\d{2}\:?.+?\:.+',
                       clean_messages)
 
 
