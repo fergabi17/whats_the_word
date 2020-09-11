@@ -1,7 +1,7 @@
 # What's the word?
 
 What's the word? is a web application that can extract information from a WhatsApp chat:<br/>
-[See here the live version](http://fergabi17-whats-the-word.herokuapp.com/){:target="_blank"}
+[See here the live version](http://fergabi17-whats-the-word.herokuapp.com/)
 
 From a text file containing a WhatsApp history, this app can extract:
 - How many messages were sent
@@ -11,7 +11,7 @@ From a text file containing a WhatsApp history, this app can extract:
 - The most common words
 - The most common word combination
 - The longest word
-- An analysis counting the number of characters per message to test if [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law){:target="_blank"} applies
+- An analysis counting the number of characters per message to test if [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law) applies
 
 This data is presented to the user in a single page in a story format.
 
@@ -70,7 +70,7 @@ Future implementation
 
 Find Here the wire frames for the information architecture:
 
-[Wireframes](https://fergabi17.github.io/whats_the_word/resources/wireframes/wireframes.html){:target="_blank"}
+[Wireframes](https://fergabi17.github.io/whats_the_word/resources/wireframes/wireframes.html)
 
 ### SKELETON PLANE
 
@@ -110,67 +110,67 @@ User Stories:
 
 ## Technologies Used
 
-- [Html](https://html.com){:target="_blank"}
+- [Html](https://html.com)
     - The project uses HTML5, standard markup language for creating Web pages.
 
-- [CSS](https://www.css3.info){:target="_blank"}
+- [CSS](https://www.css3.info)
     - The project uses CSS to style the website.
 
-- [Javascript](https://www.javascript.com/){:target="_blank"}
+- [Javascript](https://www.javascript.com/)
     - The project uses javascript for the website functionalities
 
-- [Charts JS](https://www.chartjs.org/){:target="_blank"}
+- [Charts JS](https://www.chartjs.org/)
     - Charts JS was used to present user's data and global website data
 
-- [Python](https://www.python.org/){:target="_blank"}
+- [Python](https://www.python.org/)
     - The project uses python to process data
 
-- [Flask](https://flask.palletsprojects.com/en/1.1.x/){:target="_blank"}
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
     - The project uses flask for routing
 
-- [Jinja](https://jinja.palletsprojects.com/en/2.11.x/){:target="_blank"}
+- [Jinja](https://jinja.palletsprojects.com/en/2.11.x/)
     - Jinja templates to render html from python
 
-- [MongoDB](https://account.mongodb.com/){:target="_blank"}
+- [MongoDB](https://account.mongodb.com/)
     - Used to store the website's database
 
-- [Bootstrap](https://getbootstrap.com){:target="_blank"}
+- [Bootstrap](https://getbootstrap.com)
     - The project uses the grid system from BOOTSTRAP to get the website responsive.
 
-- [Regex Tester](https://regex101.com/){:target="_blank"}
+- [Regex Tester](https://regex101.com/)
     - Consulted to test and validate regex used
 
-- [Google fonts](https://fonts.google.com/){:target="_blank"}
+- [Google fonts](https://fonts.google.com/)
     - Used as a source for all fonts
     
-- [Scheme Colour](https://www.schemecolor.com/){:target="_blank"}
+- [Scheme Colour](https://www.schemecolor.com/)
     - To generate the green colour scheme 
 
-- [Google Chrome](https://www.google.com/chrome/){:target="_blank"}
+- [Google Chrome](https://www.google.com/chrome/)
     - This project used google CHROME browser and its developer tools.
 
-- [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new){:target="_blank"}
+- [Mozilla Firefox](https://www.mozilla.org/en-US/firefox/new)
     - This project used MOZILLA FIREFOX browser for testing
 
-- [Safari](https://www.apple.com/safari/){:target="_blank"}
+- [Safari](https://www.apple.com/safari/)
     - This project used SAFARI browser for testing
 
-- [Visual Studio Code](https://code.visualstudio.com/){:target="_blank"}
+- [Visual Studio Code](https://code.visualstudio.com/)
     - This project was built using Visual Studio Code IDE.
 
-- [Git](https://git-scm.com/){:target="_blank"}
+- [Git](https://git-scm.com/)
     - The project used GIT for Version Control.
 
-- [GitHub](https://github.com/){:target="_blank"}
+- [GitHub](https://github.com/)
     - This project used GITHUB for files repository.
 
-- [Am I Responsive](http://ami.responsivedesign.is){:target="_blank"}
+- [Am I Responsive](http://ami.responsivedesign.is)
     - This tool was used for testing the responsiveness of the website.
 
-- [Html validator](https://validator.w3.org/nu/#textarea){:target="_blank"}
+- [Html validator](https://validator.w3.org/nu/#textarea)
     - This tool was used to validate the website's HTML code.
 
-- [Css validator](https://jigsaw.w3.org/css-validator/validator){:target="_blank"}
+- [Css validator](https://jigsaw.w3.org/css-validator/validator)
     - This tool was used to validate the website's CSS code.
     
 
@@ -187,7 +187,7 @@ Each phone type can export a slightly different prefix in a text message. The fi
 - ‎[19/07/2020 19:46:25] Participant's name:
 - [13/04/2019, 17:46:57] Participant's name:
 
-A pattern was created to match them all and tested on [Regex Tester](https://regex101.com/){:target="_blank"}.
+A pattern was created to match them all and tested on [Regex Tester](https://regex101.com/).
 
 ### Popular words
 
@@ -229,6 +229,7 @@ After getting this information, in its test phase I realized the numbers were di
 At this point, the parameters used to match a message were:</br>
     - the prefix would mark the beginning </br>
     - a line-break/new paragraph would mark the end</br>
+
 In this scenario, anything that appeared after a line break on a message wouldn't be considered as part of the message. So, if the word we were looking for was typed after a line break inserted bu the user, it wasn't counted on the monthly result. To solve this, before creating an array with all the messages, the line breaks in the middle of a message had to be cleaned. After this, I was sure all the line breaks that were still there could be used as a message separator.
 
 - The word appeared more than once in a message</br>
@@ -362,13 +363,13 @@ To deploy your version of this webapp:
 ### Acknowledgements
 
 Websites consulted during the project development. Those websites were used for research on how to build the webapp, as well as for coding references:
-- [CSS-tricks](https://css-tricks.com/){:target="_blank"}
-- [W3schools](https://www.w3schools.com/){:target="_blank"}
-- [StackOverflow](https://stackoverflow.com/){:target="_blank"}
-- [Oireachtas-ifd-project](https://github.com/Pattern-Projects/oireachtas-ifd-project/){:target="_blank"}
-- [Regex Tester](https://regex101.com/){:target="_blank"}
-- [WhatsApp](https://faq.whatsapp.com/android/chats/how-to-save-your-chat-history/?lang=en){:target="_blank"}
-- [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law){:target="_blank"}
+- [CSS-tricks](https://css-tricks.com/)
+- [W3schools](https://www.w3schools.com/)
+- [StackOverflow](https://stackoverflow.com/)
+- [Oireachtas-ifd-project](https://github.com/Pattern-Projects/oireachtas-ifd-project/)
+- [Regex Tester](https://regex101.com/)
+- [WhatsApp](https://faq.whatsapp.com/android/chats/how-to-save-your-chat-history/?lang=en)
+- [Benford's law](https://en.wikipedia.org/wiki/Benford%27s_law)
 
 
 Thank you for mentoring and support:
