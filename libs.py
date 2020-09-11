@@ -184,9 +184,10 @@ ignored_words = [
 ]
 
 media = [
+    #EN
     "\w+\somitted",
     "\w+\sattached",
-    
+    #PT
     "imagem ocultada",
     "imagem anexada",
     "figurinha omitida",
@@ -195,6 +196,12 @@ media = [
     "arquivo anexado",
     "arquivo de mídia oculto",
     "áudio ocultado",
+    #fr
+    "médias omis"
+    "\w+\somis",
+    "\w+\sattaché",
+    "\w+\somise",
+    "\w+\sattachée",
 ]
 
 def process_ignored_words(ignored):
