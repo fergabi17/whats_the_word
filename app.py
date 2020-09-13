@@ -17,7 +17,7 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 
 mongo = PyMongo(app)
-inputs = mongo.db.test_inputs
+inputs = mongo.db.inputs
 
 
 @app.route('/')
